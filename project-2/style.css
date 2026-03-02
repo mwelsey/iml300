@@ -1,3 +1,67 @@
 body {
-    background-color: aquamarine;
+    margin: 0;
+    font-family: "Trebuchet MS", sans-serif;
+    background: linear-gradient(135deg, #ff9ff3, #48dbfb, #1dd1a1);
+    background-size: 300% 300%;
+    animation: gradientShift 10s ease infinite;
+    color: white;
+    text-align: center;
+    transition: background 1s ease;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    padding: 80px 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+button {
+    padding: 12px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background: black;
+    color: white;
+}
+
+.philosophy {
+    background: black;
+    color: #f1f1f1;
+}
+
+.glitch {
+    animation: glitch 0.2s infinite;
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(2px, -2px);
+    }
+    50% {
+        transform: translate(-2px, 2px);
+    }
+    100% {
+        transform: translate(0);
+    }
 }

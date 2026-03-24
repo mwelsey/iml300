@@ -9,7 +9,6 @@ body {
     transition: background 1s ease;
 }
 
-
 @keyframes gradientShift {
     0% {
         background-position: 0% 50%;
@@ -26,6 +25,7 @@ body {
     padding: 80px 20px;
     max-width: 800px;
     margin: auto;
+    position: relative;
 }
 
 button {
@@ -46,7 +46,7 @@ button:hover {
     color: white;
 }
 
-.philosophy {
+.black {
     background: black;
     color: #f1f1f1;
 }
@@ -64,5 +64,100 @@ button:hover {
     }
     100% {
         transform: translate(0);
+    }
+}
+
+.voice {
+    position: absolute;
+    font-size: 1.2rem;
+    color: #2ca0f7;
+    opacity: 0.85;
+    animation: move 15s ease-in-out infinite alternate;
+}
+
+.v1 {
+    top: 5%;
+    left: 10%;
+}
+.v2 {
+    top: 20%;
+    left: 60%;
+}
+.v3 {
+    top: 35%;
+    left: 15%;
+}
+.v4 {
+    top: 50%;
+    left: 70%;
+}
+.v5 {
+    top: 65%;
+    left: 8%;
+}
+.v6 {
+    top: 75%;
+    left: 50%;
+}
+.v7 {
+    top: 30%;
+    left: 80%;
+}
+.v8 {
+    top: 85%;
+    left: 20%;
+}
+
+@keyframes move {
+    0% {
+        transform: translate(-250px, -250px);
+    }
+    100% {
+        transform: translate(50px, 450px);
+    }
+}
+
+.drift {
+    position: relative;
+    animation: drift 5s infinite alternate;
+    color: #aaffbb;
+}
+
+@keyframes drift {
+    from {
+        left: -150px;
+    }
+    to {
+        left: 150px;
+    }
+}
+
+.drift2 {
+    position: relative;
+    animation: drift2 5s infinite alternate;
+    color: #aaffbb;
+}
+
+@keyframes drift2 {
+    from {
+        left: 150px;
+    }
+    to {
+        left: -150px;
+    }
+}
+
+.drift3 {
+    position: relative;
+    animation: drift3 6s infinite alternate;
+    color: #aaffbb;
+}
+
+@keyframes drift3 {
+    from {
+        left: -100px;
+    }
+    to {
+        left: 200px;
     }
 }

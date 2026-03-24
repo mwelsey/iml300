@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", sans-serif;
+
+  background-image: url("life.jpg");
+  background-size: 80% auto;
+  background-position: center 5%;
+  background-repeat: no-repeat;
+
+  position: relative;
+  color: white;
+  text-align: center;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(135deg, #ff9ff3, #48dbfb, #1dd1a1);
+  background-size: 300% 300%;
+  animation: gradientShift 10s ease infinite;
+
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.overlay-box {
+  position: relative;
+  z-index: 2;
+  background: rgba(200, 200, 255, 0.55);
+  padding: 30px;
+  max-width: 400px;
+  margin: 200px auto;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

@@ -1,9 +1,9 @@
 body {
     margin: 0;
-    font-family: "Trebuchet MS", sans-serif;
+    font-family: "Jungle Adventurer", sans-serif;
     background: linear-gradient(135deg, #ff9ff3, #48dbfb, #1dd1a1);
     background-size: 300% 300%;
-    animation: gradientShift 10s ease infinite;
+    animation: gradientShift 8s ease infinite;
     color: white;
     text-align: center;
     transition: background 1s ease;
@@ -160,4 +160,36 @@ button:hover {
     to {
         left: 200px;
     }
+}
+
+.pulse {
+animation: pulse 10s ease 10s 10 normal forwards;
+}
+
+@keyframes pulse {
+	0% {
+		animation-timing-function: ease-out;
+		transform: scale(1);
+		transform-origin: center center;
+	}
+
+	10% {
+		animation-timing-function: ease-in;
+		transform: scale(0.71);
+	}
+
+	17% {
+		animation-timing-function: ease-out;
+		transform: scale(0.98);
+	}
+
+	33% {
+		animation-timing-function: ease-in;
+		transform: scale(0.77);
+	}
+
+	45% {
+		animation-timing-function: ease-out;
+		transform: scale(1.5);
+	}
 }

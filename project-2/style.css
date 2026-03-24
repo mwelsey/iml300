@@ -163,33 +163,55 @@ button:hover {
 }
 
 .pulse {
-animation: pulse 10s ease 10s 10 normal forwards;
+    animation: pulse 10s ease 10s 10 normal forwards;
 }
 
 @keyframes pulse {
+    0% {
+        animation-timing-function: ease-out;
+        transform: scale(1);
+        transform-origin: center center;
+    }
+
+    10% {
+        animation-timing-function: ease-in;
+        transform: scale(0.71);
+    }
+
+    17% {
+        animation-timing-function: ease-out;
+        transform: scale(0.98);
+    }
+
+    33% {
+        animation-timing-function: ease-in;
+        transform: scale(0.77);
+    }
+
+    45% {
+        animation-timing-function: ease-out;
+        transform: scale(1.5);
+    }
+}
+
+.fade {
+    animation: fade 15s ease 0s 1 normal forwards;
+}
+
+@keyframes fade {
 	0% {
-		animation-timing-function: ease-out;
-		transform: scale(1);
-		transform-origin: center center;
+		opacity: 0.8;
+		transform: scale(0.2);
 	}
 
-	10% {
-		animation-timing-function: ease-in;
-		transform: scale(0.71);
-	}
-
-	17% {
-		animation-timing-function: ease-out;
-		transform: scale(0.98);
-	}
-
-	33% {
-		animation-timing-function: ease-in;
-		transform: scale(0.77);
-	}
-
-	45% {
-		animation-timing-function: ease-out;
+	80% {
+		opacity: 0;
 		transform: scale(1.5);
 	}
+
+	100% {
+		opacity: 0;
+		transform: scale(2.5);
+	}
 }
+

@@ -2,7 +2,9 @@ h1 {
     font-family: "Dancing Script", cursive;
 }
 
-h2, p, b {
+h2,
+p,
+b {
     font-family: "Fredoka", sans-serif;
 }
 #viewer {

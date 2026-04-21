@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&family=Playfair+Display:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600&family=Playfair+Display:wght@500&display=swap");
 
 body {
     margin: 0;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     background-color: #fec59a;
     color: #111;
 }
@@ -20,7 +20,7 @@ header {
 
 header h2 {
     margin: 0;
-    font-family: 'Playfair Display', serif;
+    font-family: "Playfair Display", serif;
     letter-spacing: 1px;
 }
 
@@ -55,6 +55,8 @@ nav a:hover::after {
 h1 {
     font-size: 3rem;
     font-weight: 600;
+    font-family: "Playfair Display", serif;
+
     max-width: 700px;
 }
 
@@ -62,11 +64,14 @@ section {
     padding: 80px 60px;
 }
 
-.box, .highlight {
+.box,
+.highlight {
     padding: 30px;
     margin: 40px 0;
     border-radius: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 .box {
@@ -78,15 +83,18 @@ section {
     color: white;
 }
 
-.box:hover, .highlight:hover {
+.box:hover,
+.highlight:hover {
     transform: translateY(-8px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 img {
     width: 100%;
     border-radius: 12px;
-    transition: transform 0.4s ease, opacity 0.4s ease;
+    transition:
+        transform 0.4s ease,
+        opacity 0.4s ease;
 }
 
 /* reveal */
@@ -119,4 +127,3 @@ footer {
     margin-top: 60px;
     font-size: 0.9rem;
 }
-

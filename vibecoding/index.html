@@ -1,1008 +1,1017 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Map Studio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-    <style>
-         *,
-         *::before,
-         *::after {
-           box-sizing: border-box;
-           margin: 0;
-           padding: 0;
-         }
-         :root {
-           --bg: #0f0f0f;
-           --surface: #1a1a1a;
-           --surface2: #242424;
-           --border: rgba(255, 255, 255, 0.1);
-           --text: #f0ede6;
-           --muted: #888;
-           --accent: #e8d5b0;
-           --accent2: #8fb8d8;
-           --danger: #e07070;
-           --green: #82c99a;
-         }
-         body {
-           background: var(--bg);
-           color: var(--text);
-           font-family: cursive
-           height: 100vh;
-           display: flex;
-           flex-direction: column;
-           overflow: hidden;
-         }
-         header {
-           display: flex;
-           align-items: center;
-           justify-content: space-between;
-           padding: 10px 18px;
-           border-bottom: 1px solid var(--border);
-           background: var(--surface);
-           z-index: 1000;
-           flex-shrink: 0;
-         }
-         .logo {
-           font-size: 25px;
-           letter-spacing: 0.1em;
-           color: lightpink;
-           font-weight: 700;
-         }
-         .city-sub {
-           font-size: 15px;
-           color: var(--muted);
-           margin-top: 2px;
-         }
-         .city-sub span {
-           color: lightpink;
-           font-weight: 700;
-         }
-         .header-btns {
-           display: flex;
-           gap: 8px;
-         }
-         .hbtn {
-           font-size: 15px;
-           background: transparent;
-           border: 1px solid var(--border);
-           color: var(--muted);
-           padding: 5px 13px;
-           border-radius: 4px;
-           cursor: pointer;
-           transition: all 0.15s;
-           letter-spacing: 0.05em;
-         }
-         .hbtn:hover {
-           border-color: var(--accent);
-           color: var(--accent);
-         }
-         .hbtn.danger {
-           border-color: rgba(224, 112, 112, 0.35);
-           color: var(--danger);
-         }
-         .hbtn.danger:hover {
-           border-color: var(--danger);
-           background: rgba(224, 112, 112, 0.08);
-         }
-         .main {
-           display: flex;
-           flex: 1;
-           overflow: hidden;
-         }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Map Studio</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+        <style>
+               *,
+               *::before,
+               *::after {
+                 box-sizing: border-box;
+                 margin: 0;
+                 padding: 0;
+               }
+               :root {
+                 --bg: #0f0f0f;
+                 --surface: #1a1a1a;
+                 --surface2: #242424;
+                 --border: rgba(255, 255, 255, 0.1);
+                 --text: #f0ede6;
+                 --muted: #888;
+                 --accent: #e8d5b0;
+                 --accent2: #8fb8d8;
+                 --danger: #e07070;
+                 --green: #82c99a;
+               }
+               body {
+                 background: var(--bg);
+                 color: var(--text);
+                 font-family: cursive
+                 height: 100vh;
+                 display: flex;
+                 flex-direction: column;
+                 overflow: hidden;
+               }
+               header {
+                 display: flex;
+                 align-items: center;
+                 justify-content: space-between;
+                 padding: 10px 18px;
+                 border-bottom: 1px solid var(--border);
+                 background: var(--surface);
+                 z-index: 1000;
+                 flex-shrink: 0;
+               }
+               .logo {
+                 font-size: 25px;
+                 letter-spacing: 0.1em;
+                 color: lightpink;
+                 font-weight: 700;
+               }
+               .city-sub {
+                 font-size: 15px;
+                 color: var(--muted);
+                 margin-top: 2px;
+               }
+               .city-sub span {
+                 color: lightpink;
+                 font-weight: 700;
+               }
+               .header-btns {
+                 display: flex;
+                 gap: 8px;
+               }
+               .hbtn {
+                 font-size: 15px;
+                 background: transparent;
+                 border: 1px solid var(--border);
+                 color: var(--muted);
+                 padding: 5px 13px;
+                 border-radius: 4px;
+                 cursor: pointer;
+                 transition: all 0.15s;
+                 letter-spacing: 0.05em;
+               }
+               .hbtn:hover {
+                 border-color: var(--accent);
+                 color: var(--accent);
+               }
+               .hbtn.danger {
+                 border-color: rgba(224, 112, 112, 0.35);
+                 color: var(--danger);
+               }
+               .hbtn.danger:hover {
+                 border-color: var(--danger);
+                 background: rgba(224, 112, 112, 0.08);
+               }
+               .main {
+                 display: flex;
+                 flex: 1;
+                 overflow: hidden;
+               }
 
-         /* map-wrap holds the map + the visual overlay on top */
-         #map-wrap {
-           flex: 1;
-           position: relative;
-           overflow: hidden;
-         }
-         #map {
-           position: absolute;
-           inset: 0;
-           z-index: 1;
-         }
+               /* map-wrap holds the map + the visual overlay on top */
+               #map-wrap {
+                 flex: 1;
+                 position: relative;
+                 overflow: hidden;
+               }
+               #map {
+                 position: absolute;
+                 inset: 0;
+                 z-index: 1;
+               }
 
-         /* The overlay is a pointer-events:none div that sits on top of the map.
-      ALL visual effects go here — the map itself is never transformed. */
-         #fx-overlay {
-           position: absolute;
-           inset: 0;
-           z-index: 10;
-           pointer-events: none;
-           transition: filter 0.3s;
-         }
+               /* The overlay is a pointer-events:none div that sits on top of the map.
+            ALL visual effects go here — the map itself is never transformed. */
+               #fx-overlay {
+                 position: absolute;
+                 inset: 0;
+                 z-index: 10;
+                 pointer-events: none;
+                 transition: filter 0.3s;
+               }
 
-         .sidebar {
-           width: 260px;
-           background: var(--surface);
-           border-left: 1px solid var(--border);
-           display: flex;
-           flex-direction: column;
-           overflow-y: auto;
-           z-index: 100;
-           flex-shrink: 0;
-         }
-         ::-webkit-scrollbar {
-           width: 3px;
-         }
-         ::-webkit-scrollbar-thumb {
-           background: rgba(255, 255, 255, 0.1);
-           border-radius: 3px;
-         }
-         .sec {
-           padding: 14px 16px;
-           border-bottom: 1px solid var(--border);
-         }
-         .sec-title {
-           font-size: 15px;
-           letter-spacing: 0.15em;
-           text-transform: uppercase;
-           color: var(--muted);
-           margin-bottom: 11px;
-           font-weight: 600;
-         }
-         .swatches {
-           display: flex;
-           gap: 7px;
-           flex-wrap: wrap;
-         }
-         .swatch {
-           width: 30px;
-           height: 30px;
-           border-radius: 50%;
-           cursor: pointer;
-           border: 2px solid transparent;
-           transition: all 0.15s;
-           flex-shrink: 0;
-         }
-         .swatch:hover {
-           transform: scale(1.18);
-         }
-         .swatch.on {
-           border-color: #fff;
-           transform: scale(1.15);
-         }
-         .sliders {
-           display: flex;
-           flex-direction: column;
-           gap: 9px;
-         }
-         .sl-row {
-           display: flex;
-           align-items: center;
-           gap: 8px;
-         }
-         .sl-lbl {
-           font-size: 14px;
-           color: lightgrey;
-           width: 56px;
-           flex-shrink: 0;
-         }
-         .sl-row input[type="range"] {
-           flex: 1;
-           accent-color:lightpink;
-           cursor: pointer;
-           height: 4px;
-         }
-         .sl-val {
-           font-size: 13px;
-           color: lightpink;
-           width: 34px;
-           text-align: right;
-         }
-         .fx-grid {
-           display: grid;
-           grid-template-columns: 1fr 1fr;
-           gap: 5px;
-         }
-         .fxbtn {
-           font-size: 13px;
-           font-weight: 500;
-           background: var(--surface2);
-           border: 1px solid var(--border);
-           color: var(--text);
-           padding: 7px 8px;
-           border-radius: 5px;
-           cursor: pointer;
-           transition: all 0.12s;
-           text-align: center;
-         }
-         .fxbtn:hover {
-           border-color: rgba(255, 255, 255, 0.22);
-           background: #2c2c2c;
-         }
-         .fxbtn.on {
-           background: var(--accent);
-           color: #1a1400;
-           border-color: var(--accent);
-         }
-         .fxbtn.on-blue {
-           background: var(--accent2);
-           color: #0a1a2a;
-           border-color: var(--accent2);
-         }
-         .fxbtn.on-green {
-           background: var(--green);
-           color: #0a1a0f;
-           border-color: var(--green);
-         }
-         .fxbtn.on-red {
-           background: var(--danger);
-           color: #1a0a0a;
-           border-color: var(--danger);
-         }
-         .stack-row {
-           display: flex;
-           flex-wrap: wrap;
-           gap: 4px;
-           margin-top: 8px;
-           min-height: 18px;
-         }
-         .stag {
-           font-size: 13px;
-           background: rgba(232, 213, 176, 0.15);
-           color: var(--accent);
-           padding: 2px 7px;
-           border-radius: 3px;
-           letter-spacing: 0.04em;
-         }
-         .lbl-input {
-           background: var(--surface2);
-           border: 1px solid var(--border);
-           border-radius: 5px;
-           color: var(--text);
-           font-size: 13px;
-           padding: 7px 11px;
-           width: 100%;
-           outline: none;
-           transition: border-color 0.15s;
-           margin-bottom: 7px;
-         }
-         .lbl-input:focus {
-           border-color: var(--accent);
-         }
-         .lbl-input::placeholder {
-           color: var(--muted);
-         }
-         .lbl-place-btn {
-           font-size: 12px;
-           background: var(--surface2);
-           border: 1px dashed rgba(255, 255, 255, 0.2);
-           color: var(--accent);
-           padding: 7px;
-           border-radius: 5px;
-           cursor: pointer;
-           width: 100%;
-           transition: all 0.15s;
-           margin-bottom: 8px;
-         }
-         .lbl-place-btn:hover {
-           background: #2c2c2c;
-           border-color: var(--accent);
-         }
-         .lbl-place-btn.placing {
-           border-style: solid;
-           border-color: var(--accent);
-           background: rgba(232, 213, 176, 0.1);
-         }
-         .hint {
-           font-size: 12px;
-           color: var(--muted);
-           line-height: 1.5;
-           margin-bottom: 8px;
-         }
-         .hint.live {
-           color: var(--accent);
-         }
-         .lbl-list {
-           display: flex;
-           flex-direction: column;
-           gap: 4px;
-           max-height: 130px;
-           overflow-y: auto;
-         }
-         .lbl-item {
-           display: flex;
-           align-items: center;
-           background: var(--surface2);
-           border: 1px solid var(--border);
-           border-radius: 4px;
-           padding: 5px 9px;
-           font-size: 15px;
-           gap: 6px;
-         }
-         .lbl-name {
-           flex: 1;
-           overflow: hidden;
-           text-overflow: ellipsis;
-           white-space: nowrap;
-           cursor: pointer;
-         }
-         .lbl-name:hover {
-           color: var(--accent);
-         }
-         .lbl-del {
-           background: none;
-           border: none;
-           color: var(--danger);
-           cursor: pointer;
-           font-size: 13px;
-           padding: 0;
-           flex-shrink: 0;
-         }
-         .rbtn {
-           width: 100%;
-           font-size: 13px;
-           background: transparent;
-           border: 1px solid;
-           padding: 8px;
-           border-radius: 5px;
-           cursor: pointer;
-           letter-spacing: 0.05em;
-           text-transform: uppercase;
-           transition: all 0.15s;
-           margin-bottom: 6px;
-         }
-         .rbtn.red {
-           border-color: rgba(224, 112, 112, 0.5);
-           color: var(--danger);
-         }
-         .rbtn.red:hover {
-           background: rgba(224, 112, 112, 0.1);
-         }
-         .rbtn.blue {
-           border-color: rgba(143, 184, 216, 0.4);
-           color: var(--accent2);
-         }
-         .rbtn.blue:hover {
-           background: rgba(143, 184, 216, 0.08);
-         }
-         .custom-pin {
-           background: rgba(10, 10, 10, 0.9);
-           border: 1.5px solid #e8d5b0;
-           border-radius: 4px;
-           padding: 3px 8px;
-           font-size: 12px;
-           font-weight: 500;
-           color: #e8d5b0;
-           white-space: nowrap;
-           pointer-events: none;
-         }
+               .sidebar {
+                 width: 260px;
+                 background: var(--surface);
+                 border-left: 1px solid var(--border);
+                 display: flex;
+                 flex-direction: column;
+                 overflow-y: auto;
+                 z-index: 100;
+                 flex-shrink: 0;
+               }
+               ::-webkit-scrollbar {
+                 width: 3px;
+               }
+               ::-webkit-scrollbar-thumb {
+                 background: rgba(255, 255, 255, 0.1);
+                 border-radius: 3px;
+               }
+               .sec {
+                 padding: 14px 16px;
+                 border-bottom: 1px solid var(--border);
+               }
+               .sec-title {
+                 font-size: 15px;
+                 letter-spacing: 0.15em;
+                 text-transform: uppercase;
+                 color: var(--muted);
+                 margin-bottom: 11px;
+                 font-weight: 600;
+               }
+               .swatches {
+                 display: flex;
+                 gap: 7px;
+                 flex-wrap: wrap;
+               }
+               .swatch {
+                 width: 30px;
+                 height: 30px;
+                 border-radius: 50%;
+                 cursor: pointer;
+                 border: 2px solid transparent;
+                 transition: all 0.15s;
+                 flex-shrink: 0;
+               }
+               .swatch:hover {
+                 transform: scale(1.18);
+               }
+               .swatch.on {
+                 border-color: #fff;
+                 transform: scale(1.15);
+               }
+               .sliders {
+                 display: flex;
+                 flex-direction: column;
+                 gap: 9px;
+               }
+               .sl-row {
+                 display: flex;
+                 align-items: center;
+                 gap: 8px;
+               }
+               .sl-lbl {
+                 font-size: 14px;
+                 color: lightgrey;
+                 width: 56px;
+                 flex-shrink: 0;
+               }
+               .sl-row input[type="range"] {
+                 flex: 1;
+                 accent-color:lightpink;
+                 cursor: pointer;
+                 height: 4px;
+               }
+               .sl-val {
+                 font-size: 13px;
+                 color: lightpink;
+                 width: 34px;
+                 text-align: right;
+               }
+               .fx-grid {
+                 display: grid;
+                 grid-template-columns: 1fr 1fr;
+                 gap: 5px;
+               }
+               .fxbtn {
+                 font-size: 13px;
+                 font-weight: 500;
+                 background: var(--surface2);
+                 border: 1px solid var(--border);
+                 color: var(--text);
+                 padding: 7px 8px;
+                 border-radius: 5px;
+                 cursor: pointer;
+                 transition: all 0.12s;
+                 text-align: center;
+               }
+               .fxbtn:hover {
+                 border-color: rgba(255, 255, 255, 0.22);
+                 background: #2c2c2c;
+               }
+               .fxbtn.on {
+                 background: var(--accent);
+                 color: #1a1400;
+                 border-color: var(--accent);
+               }
+               .fxbtn.on-blue {
+                 background: var(--accent2);
+                 color: #0a1a2a;
+                 border-color: var(--accent2);
+               }
+               .fxbtn.on-green {
+                 background: var(--green);
+                 color: #0a1a0f;
+                 border-color: var(--green);
+               }
+               .fxbtn.on-red {
+                 background: var(--danger);
+                 color: #1a0a0a;
+                 border-color: var(--danger);
+               }
+               .stack-row {
+                 display: flex;
+                 flex-wrap: wrap;
+                 gap: 4px;
+                 margin-top: 8px;
+                 min-height: 18px;
+               }
+               .stag {
+                 font-size: 13px;
+                 background: rgba(232, 213, 176, 0.15);
+                 color: var(--accent);
+                 padding: 2px 7px;
+                 border-radius: 3px;
+                 letter-spacing: 0.04em;
+               }
+               .lbl-input {
+                 background: var(--surface2);
+                 border: 1px solid var(--border);
+                 border-radius: 5px;
+                 color: var(--text);
+                 font-size: 13px;
+                 padding: 7px 11px;
+                 width: 100%;
+                 outline: none;
+                 transition: border-color 0.15s;
+                 margin-bottom: 7px;
+               }
+               .lbl-input:focus {
+                 border-color: var(--accent);
+               }
+               .lbl-input::placeholder {
+                 color: var(--muted);
+               }
+               .lbl-place-btn {
+                 font-size: 12px;
+                 background: var(--surface2);
+                 border: 1px dashed rgba(255, 255, 255, 0.2);
+                 color: var(--accent);
+                 padding: 7px;
+                 border-radius: 5px;
+                 cursor: pointer;
+                 width: 100%;
+                 transition: all 0.15s;
+                 margin-bottom: 8px;
+               }
+               .lbl-place-btn:hover {
+                 background: #2c2c2c;
+                 border-color: var(--accent);
+               }
+               .lbl-place-btn.placing {
+                 border-style: solid;
+                 border-color: var(--accent);
+                 background: rgba(232, 213, 176, 0.1);
+               }
+               .hint {
+                 font-size: 12px;
+                 color: var(--muted);
+                 line-height: 1.5;
+                 margin-bottom: 8px;
+               }
+               .hint.live {
+                 color: var(--accent);
+               }
+               .lbl-list {
+                 display: flex;
+                 flex-direction: column;
+                 gap: 4px;
+                 max-height: 130px;
+                 overflow-y: auto;
+               }
+               .lbl-item {
+                 display: flex;
+                 align-items: center;
+                 background: var(--surface2);
+                 border: 1px solid var(--border);
+                 border-radius: 4px;
+                 padding: 5px 9px;
+                 font-size: 15px;
+                 gap: 6px;
+               }
+               .lbl-name {
+                 flex: 1;
+                 overflow: hidden;
+                 text-overflow: ellipsis;
+                 white-space: nowrap;
+                 cursor: pointer;
+               }
+               .lbl-name:hover {
+                 color: var(--accent);
+               }
+               .lbl-del {
+                 background: none;
+                 border: none;
+                 color: var(--danger);
+                 cursor: pointer;
+                 font-size: 13px;
+                 padding: 0;
+                 flex-shrink: 0;
+               }
+               .rbtn {
+                 width: 100%;
+                 font-size: 13px;
+                 background: transparent;
+                 border: 1px solid;
+                 padding: 8px;
+                 border-radius: 5px;
+                 cursor: pointer;
+                 letter-spacing: 0.05em;
+                 text-transform: uppercase;
+                 transition: all 0.15s;
+                 margin-bottom: 6px;
+               }
+               .rbtn.red {
+                 border-color: rgba(224, 112, 112, 0.5);
+                 color: var(--danger);
+               }
+               .rbtn.red:hover {
+                 background: rgba(224, 112, 112, 0.1);
+               }
+               .rbtn.blue {
+                 border-color: rgba(143, 184, 216, 0.4);
+                 color: var(--accent2);
+               }
+               .rbtn.blue:hover {
+                 background: rgba(143, 184, 216, 0.08);
+               }
+               .custom-pin {
+                 background: rgba(10, 10, 10, 0.9);
+                 border: 1.5px solid #e8d5b0;
+                 border-radius: 4px;
+                 padding: 3px 8px;
+                 font-size: 12px;
+                 font-weight: 500;
+                 color: #e8d5b0;
+                 white-space: nowrap;
+                 pointer-events: none;
+               }
 
-         /* Glitch animation keyframes */
-         @keyframes g1 {
-           0%,
-           100% {
-             clip-path: inset(0 0 93% 0);
-             transform: translateX(-6px);
-           }
-           50% {
-             clip-path: inset(35% 0 45% 0);
-             transform: translateX(6px);
-           }
-         }
-         @keyframes g2 {
-           0%,
-           100% {
-             clip-path: inset(58% 0 16% 0);
-             transform: translateX(5px);
-           }
-           50% {
-             clip-path: inset(16% 0 66% 0);
-             transform: translateX(-5px);
-           }
-         }
-         @keyframes waveAnim {
-           0% {
-             transform: scaleX(1) scaleY(1);
-           }
-           25% {
-             transform: scaleX(1.06) scaleY(0.96);
-           }
-           50% {
-             transform: scaleX(0.96) scaleY(1.06);
-           }
-           75% {
-             transform: scaleX(1.04) scaleY(0.97);
-           }
-           100% {
-             transform: scaleX(1) scaleY(1);
-           }
-         }
-         @keyframes spinAnim {
-           from {
-             transform: rotate(0deg);
-           }
-           to {
-             transform: rotate(360deg);
-           }
-         }
-    </style>
-  </head>
-  <body>
-    <header>
-      <div>
-        <div class="logo">MAP STUDIO</div>
-        <div class="city-sub">viewing — <span id="cityname">Loading…</span></div>
-      </div>
-      <div class="header-btns">
-        <button class="hbtn" onclick="newCity()">↻ New City</button>
-        <button class="hbtn danger" onclick="resetAll()">✕ Reset</button>
-      </div>
-    </header>
-
-    <div class="main">
-      <div id="map-wrap">
-        <div id="map"></div>
-        <!-- This overlay screenshot-captures the map for visual effects while keeping the real map interactive -->
-        <div id="fx-overlay"></div>
-      </div>
-
-      <div class="sidebar">
-        <div class="sec">
-          <div class="sec-title">Color Theme</div>
-          <div class="swatches">
-            <div
-              class="swatch on"
-              data-e=""
-              style="background: #4a90a4"
-              title="Default"
-              onclick="setTheme(this,'')"></div>
-            <div
-              class="swatch"
-              data-e="invert"
-              style="background: #1a1a2e"
-              title="Night"
-              onclick="setTheme(this,'invert')"></div>
-            <div
-              class="swatch"
-              data-e="sepia"
-              style="background: #b8860b"
-              title="Sepia"
-              onclick="setTheme(this,'sepia')"></div>
-            <div
-              class="swatch"
-              data-e="neon"
-              style="background: #00ff88"
-              title="Neon"
-              onclick="setTheme(this,'neon')"></div>
-            <div
-              class="swatch"
-              data-e="blueprint"
-              style="background: #0040ff"
-              title="Blueprint"
-              onclick="setTheme(this,'blueprint')"></div>
-            <div
-              class="swatch"
-              data-e="vintage"
-              style="background: #8b6914"
-              title="Vintage"
-              onclick="setTheme(this,'vintage')"></div>
-            <div
-              class="swatch"
-              data-e="infrared"
-              style="background: #ff3060"
-              title="Infrared"
-              onclick="setTheme(this,'infrared')"></div>
-            <div
-              class="swatch"
-              data-e="rose"
-              style="background: #e080c0"
-              title="Rose"
-              onclick="setTheme(this,'rose')"></div>
-            <div
-              class="swatch"
-              data-e="forest"
-              style="background: #2d6a2d"
-              title="Forest"
-              onclick="setTheme(this,'forest')"></div>
-          </div>
-        </div>
-        <div class="sec">
-          <div class="sec-title">Adjustments</div>
-          <div class="sliders">
-            <div class="sl-row">
-              <span class="sl-lbl">Brightness</span
-              ><input type="range" id="sl-b" min="30" max="200" value="100" oninput="updateAdj()" /><span
-                class="sl-val"
-                id="sv-b"
-                >1.0</span
-              >
+               /* Glitch animation keyframes */
+               @keyframes g1 {
+                 0%,
+                 100% {
+                   clip-path: inset(0 0 93% 0);
+                   transform: translateX(-6px);
+                 }
+                 50% {
+                   clip-path: inset(35% 0 45% 0);
+                   transform: translateX(6px);
+                 }
+               }
+               @keyframes g2 {
+                 0%,
+                 100% {
+                   clip-path: inset(58% 0 16% 0);
+                   transform: translateX(5px);
+                 }
+                 50% {
+                   clip-path: inset(16% 0 66% 0);
+                   transform: translateX(-5px);
+                 }
+               }
+               @keyframes waveAnim {
+                 0% {
+                   transform: scaleX(1) scaleY(1);
+                 }
+                 25% {
+                   transform: scaleX(1.06) scaleY(0.96);
+                 }
+                 50% {
+                   transform: scaleX(0.96) scaleY(1.06);
+                 }
+                 75% {
+                   transform: scaleX(1.04) scaleY(0.97);
+                 }
+                 100% {
+                   transform: scaleX(1) scaleY(1);
+                 }
+               }
+               @keyframes spinAnim {
+                 from {
+                   transform: rotate(0deg);
+                 }
+                 to {
+                   transform: rotate(360deg);
+                 }
+               }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div>
+                <div class="logo">MAP STUDIO</div>
+                <div class="city-sub">viewing — <span id="cityname">Loading…</span></div>
             </div>
-            <div class="sl-row">
-              <span class="sl-lbl">Contrast</span
-              ><input type="range" id="sl-c" min="30" max="250" value="100" oninput="updateAdj()" /><span
-                class="sl-val"
-                id="sv-c"
-                >1.0</span
-              >
+            <div class="header-btns">
+                <button class="hbtn" onclick="newCity()">↻ New City</button>
+                <button class="hbtn danger" onclick="resetAll()">✕ Reset</button>
             </div>
-            <div class="sl-row">
-              <span class="sl-lbl">Saturate</span
-              ><input type="range" id="sl-s" min="0" max="400" value="100" oninput="updateAdj()" /><span
-                class="sl-val"
-                id="sv-s"
-                >1.0</span
-              >
+        </header>
+
+        <div class="main">
+            <div id="map-wrap">
+                <div id="map"></div>
+                <!-- This overlay screenshot-captures the map for visual effects while keeping the real map interactive -->
+                <div id="fx-overlay"></div>
             </div>
-            <div class="sl-row">
-              <span class="sl-lbl">Hue</span
-              ><input type="range" id="sl-h" min="0" max="360" value="0" oninput="updateAdj()" /><span
-                class="sl-val"
-                id="sv-h"
-                >0°</span
-              >
+
+            <div class="sidebar">
+                <div class="sec">
+                    <div class="sec-title">Color Theme</div>
+                    <div class="swatches">
+                        <div
+                            class="swatch on"
+                            data-e=""
+                            style="background: #4a90a4"
+                            title="Default"
+                            onclick="setTheme(this,'')"></div>
+                        <div
+                            class="swatch"
+                            data-e="invert"
+                            style="background: #1a1a2e"
+                            title="Night"
+                            onclick="setTheme(this,'invert')"></div>
+                        <div
+                            class="swatch"
+                            data-e="sepia"
+                            style="background: #b8860b"
+                            title="Sepia"
+                            onclick="setTheme(this,'sepia')"></div>
+                        <div
+                            class="swatch"
+                            data-e="neon"
+                            style="background: #00ff88"
+                            title="Neon"
+                            onclick="setTheme(this,'neon')"></div>
+                        <div
+                            class="swatch"
+                            data-e="blueprint"
+                            style="background: #0040ff"
+                            title="Blueprint"
+                            onclick="setTheme(this,'blueprint')"></div>
+                        <div
+                            class="swatch"
+                            data-e="vintage"
+                            style="background: #8b6914"
+                            title="Vintage"
+                            onclick="setTheme(this,'vintage')"></div>
+                        <div
+                            class="swatch"
+                            data-e="infrared"
+                            style="background: #ff3060"
+                            title="Infrared"
+                            onclick="setTheme(this,'infrared')"></div>
+                        <div
+                            class="swatch"
+                            data-e="rose"
+                            style="background: #e080c0"
+                            title="Rose"
+                            onclick="setTheme(this,'rose')"></div>
+                        <div
+                            class="swatch"
+                            data-e="forest"
+                            style="background: #2d6a2d"
+                            title="Forest"
+                            onclick="setTheme(this,'forest')"></div>
+                    </div>
+                </div>
+                <div class="sec">
+                    <div class="sec-title">Adjustments</div>
+                    <div class="sliders">
+                        <div class="sl-row">
+                            <span class="sl-lbl">Brightness</span
+                            ><input type="range" id="sl-b" min="30" max="200" value="100" oninput="updateAdj()" /><span
+                                class="sl-val"
+                                id="sv-b"
+                                >1.0</span
+                            >
+                        </div>
+                        <div class="sl-row">
+                            <span class="sl-lbl">Contrast</span
+                            ><input type="range" id="sl-c" min="30" max="250" value="100" oninput="updateAdj()" /><span
+                                class="sl-val"
+                                id="sv-c"
+                                >1.0</span
+                            >
+                        </div>
+                        <div class="sl-row">
+                            <span class="sl-lbl">Saturate</span
+                            ><input type="range" id="sl-s" min="0" max="400" value="100" oninput="updateAdj()" /><span
+                                class="sl-val"
+                                id="sv-s"
+                                >1.0</span
+                            >
+                        </div>
+                        <div class="sl-row">
+                            <span class="sl-lbl">Hue</span
+                            ><input type="range" id="sl-h" min="0" max="360" value="0" oninput="updateAdj()" /><span
+                                class="sl-val"
+                                id="sv-h"
+                                >0°</span
+                            >
+                        </div>
+                        <div class="sl-row">
+                            <span class="sl-lbl">Opacity</span
+                            ><input
+                                type="range"
+                                id="sl-o"
+                                min="20"
+                                max="100"
+                                value="100"
+                                oninput="updateOpacity()" /><span class="sl-val" id="sv-o">100%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sec">
+                    <div class="sec-title">Deconstruct & Rearrange</div>
+                    <div class="fx-grid">
+                        <button class="fxbtn" id="fx-blur" onclick="toggleFx(this,'blur')">Blur</button>
+                        <button class="fxbtn" id="fx-glitch" onclick="toggleFx(this,'glitch')">Glitch</button>
+                        <button class="fxbtn" id="fx-grainy" onclick="toggleFx(this,'grainy')">Grainy</button>
+                        <button class="fxbtn" id="fx-tilt" onclick="toggleFx(this,'tilt')">Tilt</button>
+                        <button class="fxbtn" id="fx-stretch" onclick="toggleFx(this,'stretch')">Stretch</button>
+                        <button class="fxbtn" id="fx-mirror" onclick="toggleFx(this,'mirror')">Mirror</button>
+                        <button class="fxbtn" id="fx-spin" onclick="toggleFx(this,'spin')">Spin</button>
+                        <button class="fxbtn" id="fx-wave" onclick="toggleFx(this,'wave')">Wave</button>
+                        <button class="fxbtn" id="fx-vignette" onclick="toggleFx(this,'vignette')">Vignette</button>
+                        <button class="fxbtn" id="fx-shatter" onclick="toggleFx(this,'shatter')">Shatter</button>
+                    </div>
+                    <div class="stack-row" id="stackrow"></div>
+                </div>
+                <div class="sec">
+                    <div class="sec-title">Labels</div>
+                    <input class="lbl-input" id="lbl-txt" type="text" placeholder="Place name…" maxlength="40" />
+                    <button class="lbl-place-btn" id="lbl-btn" onclick="startLabel()">
+                        + Click map to place label
+                    </button>
+                    <div class="hint" id="lbl-hint">Type a name then click above, then tap the map.</div>
+                    <div class="lbl-list" id="lbl-list"></div>
+                </div>
+                <div class="sec">
+                    <div class="sec-title">Reset</div>
+                    <button class="rbtn red" onclick="resetAll()">✕ Clear all effects</button>
+                    <button class="rbtn blue" onclick="newCity()">↻ Teleport to new city</button>
+                </div>
             </div>
-            <div class="sl-row">
-              <span class="sl-lbl">Opacity</span
-              ><input type="range" id="sl-o" min="20" max="100" value="100" oninput="updateOpacity()" /><span
-                class="sl-val"
-                id="sv-o"
-                >100%</span
-              >
-            </div>
-          </div>
         </div>
-        <div class="sec">
-          <div class="sec-title">Deconstruct & Rearrange</div>
-          <div class="fx-grid">
-            <button class="fxbtn" id="fx-blur" onclick="toggleFx(this,'blur')">Blur</button>
-            <button class="fxbtn" id="fx-glitch" onclick="toggleFx(this,'glitch')">Glitch</button>
-            <button class="fxbtn" id="fx-grainy" onclick="toggleFx(this,'grainy')">Grainy</button>
-            <button class="fxbtn" id="fx-tilt" onclick="toggleFx(this,'tilt')">Tilt</button>
-            <button class="fxbtn" id="fx-stretch" onclick="toggleFx(this,'stretch')">Stretch</button>
-            <button class="fxbtn" id="fx-mirror" onclick="toggleFx(this,'mirror')">Mirror</button>
-            <button class="fxbtn" id="fx-spin" onclick="toggleFx(this,'spin')">Spin</button>
-            <button class="fxbtn" id="fx-wave" onclick="toggleFx(this,'wave')">Wave</button>
-            <button class="fxbtn" id="fx-vignette" onclick="toggleFx(this,'vignette')">Vignette</button>
-            <button class="fxbtn" id="fx-shatter" onclick="toggleFx(this,'shatter')">Shatter</button>
-          </div>
-          <div class="stack-row" id="stackrow"></div>
-        </div>
-        <div class="sec">
-          <div class="sec-title">Labels</div>
-          <input class="lbl-input" id="lbl-txt" type="text" placeholder="Place name…" maxlength="40" />
-          <button class="lbl-place-btn" id="lbl-btn" onclick="startLabel()">+ Click map to place label</button>
-          <div class="hint" id="lbl-hint">Type a name then click above, then tap the map.</div>
-          <div class="lbl-list" id="lbl-list"></div>
-        </div>
-        <div class="sec">
-          <div class="sec-title">Reset</div>
-          <button class="rbtn red" onclick="resetAll()">✕ Clear all effects</button>
-          <button class="rbtn blue" onclick="newCity()">↻ Teleport to new city</button>
-        </div>
-      </div>
-    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-    <script>
-      // ─── State ───────────────────────────────────────────────────────────────────
-      var map = null,
-        tileLayer = null,
-        curCity = null;
-      var theme = "",
-        adj = { b: 1, c: 1, s: 1, h: 0 },
-        tileOpacity = 1;
-      var fxOn = new Set(),
-        labels = [],
-        markers = [],
-        placing = false;
-      var glitchEl = null,
-        grainEl = null,
-        vigEl = null;
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+        <script>
+            // ─── State ───────────────────────────────────────────────────────────────────
+            var map = null,
+                tileLayer = null,
+                curCity = null;
+            var theme = "",
+                adj = { b: 1, c: 1, s: 1, h: 0 },
+                tileOpacity = 1;
+            var fxOn = new Set(),
+                labels = [],
+                markers = [],
+                placing = false;
+            var glitchEl = null,
+                grainEl = null,
+                vigEl = null;
 
-      // ─── Data ────────────────────────────────────────────────────────────────────
-      var CITIES = [
-        { name: "New York", lat: 40.758, lng: -73.9855, z: 14 },
-        { name: "Paris", lat: 48.8566, lng: 2.3522, z: 14 },
-        { name: "Tokyo", lat: 35.6762, lng: 139.6503, z: 14 },
-        { name: "London", lat: 51.5074, lng: -0.1278, z: 14 },
-        { name: "Barcelona", lat: 41.3851, lng: 2.1734, z: 14 },
-        { name: "Sydney", lat: -33.8688, lng: 151.2093, z: 14 },
-        { name: "Dubai", lat: 25.2048, lng: 55.2708, z: 13 },
-        { name: "Berlin", lat: 52.52, lng: 13.405, z: 13 },
-        { name: "Chicago", lat: 41.8827, lng: -87.6233, z: 14 },
-        { name: "Marrakech", lat: 31.6295, lng: -7.9811, z: 14 },
-        { name: "Seoul", lat: 37.5665, lng: 126.978, z: 13 },
-        { name: "Amsterdam", lat: 52.3676, lng: 4.9041, z: 14 },
-        { name: "Rome", lat: 41.9028, lng: 12.4964, z: 14 },
-        { name: "Singapore", lat: 1.3521, lng: 103.8198, z: 14 },
-        { name: "Los Angeles", lat: 34.0522, lng: -118.2437, z: 13 },
-        { name: "Buenos Aires", lat: -34.6037, lng: -58.3816, z: 13 },
-        { name: "Cairo", lat: 30.0444, lng: 31.2357, z: 13 }
-      ];
+            // ─── Data ────────────────────────────────────────────────────────────────────
+            var CITIES = [
+                { name: "New York", lat: 40.758, lng: -73.9855, z: 14 },
+                { name: "Paris", lat: 48.8566, lng: 2.3522, z: 14 },
+                { name: "Tokyo", lat: 35.6762, lng: 139.6503, z: 14 },
+                { name: "London", lat: 51.5074, lng: -0.1278, z: 14 },
+                { name: "Barcelona", lat: 41.3851, lng: 2.1734, z: 14 },
+                { name: "Sydney", lat: -33.8688, lng: 151.2093, z: 14 },
+                { name: "Dubai", lat: 25.2048, lng: 55.2708, z: 13 },
+                { name: "Berlin", lat: 52.52, lng: 13.405, z: 13 },
+                { name: "Chicago", lat: 41.8827, lng: -87.6233, z: 14 },
+                { name: "Marrakech", lat: 31.6295, lng: -7.9811, z: 14 },
+                { name: "Seoul", lat: 37.5665, lng: 126.978, z: 13 },
+                { name: "Amsterdam", lat: 52.3676, lng: 4.9041, z: 14 },
+                { name: "Rome", lat: 41.9028, lng: 12.4964, z: 14 },
+                { name: "Singapore", lat: 1.3521, lng: 103.8198, z: 14 },
+                { name: "Los Angeles", lat: 34.0522, lng: -118.2437, z: 13 },
+                { name: "Buenos Aires", lat: -34.6037, lng: -58.3816, z: 13 },
+                { name: "Cairo", lat: 30.0444, lng: 31.2357, z: 13 }
+            ];
 
-      // Theme filters applied to the Leaflet tile pane (not the map container)
-      var THEMES = {
-        "": "",
-        invert: "invert(1) hue-rotate(180deg)",
-        sepia: "sepia(0.9) saturate(1.4) brightness(1.05)",
-        neon: "invert(1) hue-rotate(90deg) saturate(2.5) brightness(1.2)",
-        blueprint: "invert(1) sepia(1) saturate(4) hue-rotate(190deg) brightness(0.85)",
-        vintage: "sepia(0.6) contrast(0.9) brightness(0.95) saturate(0.8)",
-        infrared: "invert(0.8) hue-rotate(260deg) saturate(3) brightness(1.1)",
-        rose: "sepia(1) saturate(3) hue-rotate(280deg) brightness(1.1)",
-        forest: "sepia(0.5) hue-rotate(80deg) saturate(2.2) brightness(0.95)"
-      };
-
-      // ─── Map init ─────────────────────────────────────────────────────────────────
-      function buildMap(city) {
-        curCity = city;
-        document.getElementById("cityname").textContent = city.name;
-        if (map) {
-          map.remove();
-          map = null;
-        }
-        markers = [];
-        labels = [];
-        renderLabels();
-
-        map = L.map("map", { zoomControl: false, attributionControl: false }).setView([city.lat, city.lng], city.z);
-        L.control.zoom({ position: "topleft" }).addTo(map);
-        tileLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19 }).addTo(map);
-
-        map.on("click", function (e) {
-          if (!placing) return;
-          var name = document.getElementById("lbl-txt").value.trim();
-          if (!name) return;
-          dropLabel(name, e.latlng.lat, e.latlng.lng);
-          stopLabel();
-        });
-
-        applyAll();
-      }
-
-      // ─── City controls ────────────────────────────────────────────────────────────
-      function newCity() {
-        var others = CITIES.filter(function (c) {
-          return !curCity || c.name !== curCity.name;
-        });
-        buildMap(others[Math.floor(Math.random() * others.length)]);
-      }
-
-      function resetAll() {
-        theme = "";
-        adj = { b: 1, c: 1, s: 1, h: 0 };
-        tileOpacity = 1;
-        fxOn.clear();
-        resetSliders();
-        resetFxBtns();
-        resetSwatches();
-        removeGlitch();
-        removeGrain();
-        removeVig();
-        labels = [];
-        markers.forEach(function (m) {
-          if (map) map.removeLayer(m);
-        });
-        markers = [];
-        renderLabels();
-        stopLabel();
-        applyAll();
-      }
-
-      // ─── Apply all visual effects ─────────────────────────────────────────────────
-      // KEY INSIGHT: We never touch transform or filter on #map itself.
-      // - Color/adj filters → applied to the Leaflet tile pane element
-      // - Geometric transforms (tilt, stretch, mirror, spin, wave, shatter) → applied to #fx-overlay
-      // - Overlay effects (glitch, grain, vignette) → injected child elements inside #fx-overlay
-      // This keeps Leaflet's coordinate system intact so clicks/pan/zoom always work.
-
-      function getTilePane() {
-        return map ? map.getPanes().tilePane : null;
-      }
-
-      function applyAll() {
-        applyTileFilter();
-        applyOverlayFx();
-      }
-
-      function applyTileFilter() {
-        var tp = getTilePane();
-        if (!tp) return;
-        var f = THEMES[theme] || "";
-        if (adj.b !== 1) f += " brightness(" + adj.b + ")";
-        if (adj.c !== 1) f += " contrast(" + adj.c + ")";
-        if (adj.s !== 1) f += " saturate(" + adj.s + ")";
-        if (adj.h !== 0) f += " hue-rotate(" + adj.h + "deg)";
-        if (fxOn.has("blur")) f += " blur(4px)";
-        tp.style.filter = f.trim() || "none";
-        tp.style.opacity = tileOpacity;
-      }
-
-      function applyOverlayFx() {
-        var ov = document.getElementById("fx-overlay");
-
-        // Reset overlay transform/clip each time
-        ov.style.transform = "";
-        ov.style.clipPath = "";
-        ov.style.animation = "";
-
-        var t = "";
-        if (fxOn.has("tilt")) t += " perspective(900px) rotateX(18deg) scale(1.1)";
-        if (fxOn.has("stretch")) t += " scaleX(1.4)";
-        if (fxOn.has("mirror")) t += " scaleX(-1)";
-        if (fxOn.has("spin")) ov.style.animation = "spinAnim 8s linear infinite";
-        if (fxOn.has("wave")) ov.style.animation = "waveAnim 2s ease-in-out infinite";
-
-        // spin/wave override the manual transform
-        if (!fxOn.has("spin") && !fxOn.has("wave")) ov.style.transform = t.trim();
-
-        if (fxOn.has("shatter")) {
-          ov.style.clipPath =
-            "polygon(0 0,47% 0,53% 17%,100% 0,100% 44%,83% 50%,100% 56%,100% 100%,53% 100%,47% 83%,0 100%,0 56%,17% 50%,0 44%)";
-        }
-
-        // Overlay must be visible to show effects, but must NOT block pointer events
-        ov.style.pointerEvents = "none";
-
-        // Background: replicate map visuals via CSS backdrop-filter on overlay
-        // We use a mix-blend-mode approach instead — overlay stays transparent
-        // but its children (glitch, grain, vignette) add visual noise on top
-        if (fxOn.has("glitch")) addGlitch();
-        else removeGlitch();
-        if (fxOn.has("grainy")) addGrain();
-        else removeGrain();
-        if (fxOn.has("vignette")) addVig();
-        else removeVig();
-      }
-
-      // ─── Overlay child effects ────────────────────────────────────────────────────
-
-      function addGlitch() {
-        if (glitchEl) return;
-        var ov = document.getElementById("fx-overlay");
-        glitchEl = document.createElement("div");
-        glitchEl.style.cssText = "position:absolute;inset:0;pointer-events:none;z-index:2;";
-        // Two pseudo-like divs for chromatic aberration
-        var b1 = document.createElement("div");
-        b1.style.cssText =
-          "position:absolute;inset:0;background:rgba(255,0,60,0.22);mix-blend-mode:screen;animation:g1 0.25s infinite steps(1);";
-        var b2 = document.createElement("div");
-        b2.style.cssText =
-          "position:absolute;inset:0;background:rgba(0,210,255,0.22);mix-blend-mode:screen;animation:g2 0.35s infinite steps(1);";
-        glitchEl.appendChild(b1);
-        glitchEl.appendChild(b2);
-        ov.appendChild(glitchEl);
-      }
-      function removeGlitch() {
-        if (glitchEl) {
-          glitchEl.remove();
-          glitchEl = null;
-        }
-      }
-
-      function addGrain() {
-        if (grainEl) return;
-        var ov = document.getElementById("fx-overlay");
-        grainEl = document.createElement("canvas");
-        grainEl.style.cssText =
-          "position:absolute;inset:0;width:100%;height:100%;opacity:0.18;mix-blend-mode:overlay;pointer-events:none;z-index:3;";
-        ov.appendChild(grainEl);
-        renderGrain();
-      }
-      function renderGrain() {
-        if (!grainEl) return;
-        var w = grainEl.offsetWidth || 400,
-          h = grainEl.offsetHeight || 400;
-        grainEl.width = w;
-        grainEl.height = h;
-        var ctx = grainEl.getContext("2d");
-        var id = ctx.createImageData(w, h);
-        for (var i = 0; i < id.data.length; i += 4) {
-          var v = (Math.random() * 255) | 0;
-          id.data[i] = v;
-          id.data[i + 1] = v;
-          id.data[i + 2] = v;
-          id.data[i + 3] = 255;
-        }
-        ctx.putImageData(id, 0, 0);
-        if (grainEl) requestAnimationFrame(renderGrain);
-      }
-      function removeGrain() {
-        if (grainEl) {
-          grainEl.remove();
-          grainEl = null;
-        }
-      }
-
-      function addVig() {
-        if (vigEl) return;
-        var ov = document.getElementById("fx-overlay");
-        vigEl = document.createElement("div");
-        vigEl.style.cssText =
-          "position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,0.7) 100%);";
-        ov.appendChild(vigEl);
-      }
-      function removeVig() {
-        if (vigEl) {
-          vigEl.remove();
-          vigEl = null;
-        }
-      }
-
-      // ─── Theme & adjustments ──────────────────────────────────────────────────────
-      function setTheme(el, e) {
-        document.querySelectorAll(".swatch").forEach(function (s) {
-          s.classList.remove("on");
-        });
-        el.classList.add("on");
-        theme = e;
-        applyAll();
-      }
-
-      function updateAdj() {
-        adj.b = document.getElementById("sl-b").value / 100;
-        adj.c = document.getElementById("sl-c").value / 100;
-        adj.s = document.getElementById("sl-s").value / 100;
-        adj.h = parseInt(document.getElementById("sl-h").value);
-        document.getElementById("sv-b").textContent = adj.b.toFixed(1);
-        document.getElementById("sv-c").textContent = adj.c.toFixed(1);
-        document.getElementById("sv-s").textContent = adj.s.toFixed(1);
-        document.getElementById("sv-h").textContent = adj.h + "°";
-        applyAll();
-      }
-
-      function updateOpacity() {
-        tileOpacity = document.getElementById("sl-o").value / 100;
-        document.getElementById("sv-o").textContent = Math.round(tileOpacity * 100) + "%";
-        applyAll();
-      }
-
-      // ─── Fx toggles ───────────────────────────────────────────────────────────────
-      var fxClass = {
-        blur: "on",
-        glitch: "on-red",
-        grainy: "on",
-        tilt: "on-blue",
-        stretch: "on-blue",
-        mirror: "on-blue",
-        spin: "on-green",
-        wave: "on-green",
-        vignette: "on",
-        shatter: "on-red"
-      };
-
-      function toggleFx(btn, name) {
-        if (fxOn.has(name)) {
-          fxOn.delete(name);
-          btn.classList.remove("on", "on-blue", "on-green", "on-red");
-        } else {
-          fxOn.add(name);
-          btn.classList.add(fxClass[name] || "on");
-        }
-        applyAll();
-        updateStack();
-      }
-
-      function updateStack() {
-        var row = document.getElementById("stackrow");
-        row.innerHTML = "";
-        fxOn.forEach(function (n) {
-          var t = document.createElement("span");
-          t.className = "stag";
-          t.textContent = n;
-          row.appendChild(t);
-        });
-      }
-
-      // ─── Resets ───────────────────────────────────────────────────────────────────
-      function resetSliders() {
-        document.getElementById("sl-b").value = 100;
-        document.getElementById("sv-b").textContent = "1.0";
-        document.getElementById("sl-c").value = 100;
-        document.getElementById("sv-c").textContent = "1.0";
-        document.getElementById("sl-s").value = 100;
-        document.getElementById("sv-s").textContent = "1.0";
-        document.getElementById("sl-h").value = 0;
-        document.getElementById("sv-h").textContent = "0°";
-        document.getElementById("sl-o").value = 100;
-        document.getElementById("sv-o").textContent = "100%";
-      }
-      function resetFxBtns() {
-        document.querySelectorAll(".fxbtn").forEach(function (b) {
-          b.classList.remove("on", "on-blue", "on-green", "on-red");
-        });
-        document.getElementById("stackrow").innerHTML = "";
-      }
-      function resetSwatches() {
-        document.querySelectorAll(".swatch").forEach(function (s) {
-          s.classList.remove("on");
-        });
-        document.querySelector('.swatch[data-e=""]').classList.add("on");
-      }
-
-      // ─── Labels ───────────────────────────────────────────────────────────────────
-      function startLabel() {
-        var name = document.getElementById("lbl-txt").value.trim();
-        if (!name) {
-          document.getElementById("lbl-txt").focus();
-          return;
-        }
-        placing = true;
-        var btn = document.getElementById("lbl-btn");
-        btn.textContent = "▸ Tap the map now…";
-        btn.classList.add("placing");
-        document.getElementById("lbl-hint").textContent = "Click anywhere on the map to drop your label.";
-        document.getElementById("lbl-hint").className = "hint live";
-        document.getElementById("map").style.cursor = "crosshair";
-      }
-
-      function stopLabel() {
-        placing = false;
-        var btn = document.getElementById("lbl-btn");
-        btn.textContent = "+ Click map to place label";
-        btn.classList.remove("placing");
-        document.getElementById("lbl-hint").textContent = "Type a name then click above, then tap the map.";
-        document.getElementById("lbl-hint").className = "hint";
-        document.getElementById("map").style.cursor = "";
-      }
-
-      function dropLabel(name, lat, lng) {
-        var id = Date.now();
-        labels.push({ id: id, name: name, lat: lat, lng: lng });
-        var icon = L.divIcon({
-          html: '<div class="custom-pin">' + name + "</div>",
-          className: "",
-          iconAnchor: [0, 10]
-        });
-        var m = L.marker([lat, lng], { icon: icon }).addTo(map);
-        m._lid = id;
-        markers.push(m);
-        document.getElementById("lbl-txt").value = "";
-        renderLabels();
-      }
-
-      function removeLabel(id) {
-        labels = labels.filter(function (l) {
-          return l.id !== id;
-        });
-        for (var i = 0; i < markers.length; i++) {
-          if (markers[i]._lid === id) {
-            if (map) map.removeLayer(markers[i]);
-            markers.splice(i, 1);
-            break;
-          }
-        }
-        renderLabels();
-      }
-
-      function renderLabels() {
-        var list = document.getElementById("lbl-list");
-        if (!labels.length) {
-          list.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:2px 0">No labels yet</div>';
-          return;
-        }
-        list.innerHTML = "";
-        labels.forEach(function (l) {
-          var div = document.createElement("div");
-          div.className = "lbl-item";
-          var span = document.createElement("span");
-          span.className = "lbl-name";
-          span.textContent = l.name;
-          span.onclick = (function (ll) {
-            return function () {
-              if (map) map.setView([ll.lat, ll.lng], Math.max(map.getZoom(), 15), { animate: true });
+            // Theme filters applied to the Leaflet tile pane (not the map container)
+            var THEMES = {
+                "": "",
+                invert: "invert(1) hue-rotate(180deg)",
+                sepia: "sepia(0.9) saturate(1.4) brightness(1.05)",
+                neon: "invert(1) hue-rotate(90deg) saturate(2.5) brightness(1.2)",
+                blueprint: "invert(1) sepia(1) saturate(4) hue-rotate(190deg) brightness(0.85)",
+                vintage: "sepia(0.6) contrast(0.9) brightness(0.95) saturate(0.8)",
+                infrared: "invert(0.8) hue-rotate(260deg) saturate(3) brightness(1.1)",
+                rose: "sepia(1) saturate(3) hue-rotate(280deg) brightness(1.1)",
+                forest: "sepia(0.5) hue-rotate(80deg) saturate(2.2) brightness(0.95)"
             };
-          })(l);
-          var btn = document.createElement("button");
-          btn.className = "lbl-del";
-          btn.textContent = "✕";
-          btn.onclick = (function (lid) {
-            return function () {
-              removeLabel(lid);
-            };
-          })(l.id);
-          div.appendChild(span);
-          div.appendChild(btn);
-          list.appendChild(div);
-        });
-      }
 
-      // ─── Boot ─────────────────────────────────────────────────────────────────────
-      buildMap(CITIES[Math.floor(Math.random() * CITIES.length)]);
-    </script>
-  </body>
+            // ─── Map init ─────────────────────────────────────────────────────────────────
+            function buildMap(city) {
+                curCity = city;
+                document.getElementById("cityname").textContent = city.name;
+                if (map) {
+                    map.remove();
+                    map = null;
+                }
+                markers = [];
+                labels = [];
+                renderLabels();
+
+                map = L.map("map", { zoomControl: false, attributionControl: false }).setView(
+                    [city.lat, city.lng],
+                    city.z
+                );
+                L.control.zoom({ position: "topleft" }).addTo(map);
+                tileLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19 }).addTo(
+                    map
+                );
+
+                map.on("click", function (e) {
+                    if (!placing) return;
+                    var name = document.getElementById("lbl-txt").value.trim();
+                    if (!name) return;
+                    dropLabel(name, e.latlng.lat, e.latlng.lng);
+                    stopLabel();
+                });
+
+                applyAll();
+            }
+
+            // ─── City controls ────────────────────────────────────────────────────────────
+            function newCity() {
+                var others = CITIES.filter(function (c) {
+                    return !curCity || c.name !== curCity.name;
+                });
+                buildMap(others[Math.floor(Math.random() * others.length)]);
+            }
+
+            function resetAll() {
+                theme = "";
+                adj = { b: 1, c: 1, s: 1, h: 0 };
+                tileOpacity = 1;
+                fxOn.clear();
+                resetSliders();
+                resetFxBtns();
+                resetSwatches();
+                removeGlitch();
+                removeGrain();
+                removeVig();
+                labels = [];
+                markers.forEach(function (m) {
+                    if (map) map.removeLayer(m);
+                });
+                markers = [];
+                renderLabels();
+                stopLabel();
+                applyAll();
+            }
+
+            // ─── Apply all visual effects ─────────────────────────────────────────────────
+            // KEY INSIGHT: We never touch transform or filter on #map itself.
+            // - Color/adj filters → applied to the Leaflet tile pane element
+            // - Geometric transforms (tilt, stretch, mirror, spin, wave, shatter) → applied to #fx-overlay
+            // - Overlay effects (glitch, grain, vignette) → injected child elements inside #fx-overlay
+            // This keeps Leaflet's coordinate system intact so clicks/pan/zoom always work.
+
+            function getTilePane() {
+                return map ? map.getPanes().tilePane : null;
+            }
+
+            function applyAll() {
+                applyTileFilter();
+                applyOverlayFx();
+            }
+
+            function applyTileFilter() {
+                var tp = getTilePane();
+                if (!tp) return;
+                var f = THEMES[theme] || "";
+                if (adj.b !== 1) f += " brightness(" + adj.b + ")";
+                if (adj.c !== 1) f += " contrast(" + adj.c + ")";
+                if (adj.s !== 1) f += " saturate(" + adj.s + ")";
+                if (adj.h !== 0) f += " hue-rotate(" + adj.h + "deg)";
+                if (fxOn.has("blur")) f += " blur(4px)";
+                tp.style.filter = f.trim() || "none";
+                tp.style.opacity = tileOpacity;
+            }
+
+            function applyOverlayFx() {
+                var ov = document.getElementById("fx-overlay");
+
+                // Reset overlay transform/clip each time
+                ov.style.transform = "";
+                ov.style.clipPath = "";
+                ov.style.animation = "";
+
+                var t = "";
+                if (fxOn.has("tilt")) t += " perspective(900px) rotateX(18deg) scale(1.1)";
+                if (fxOn.has("stretch")) t += " scaleX(1.4)";
+                if (fxOn.has("mirror")) t += " scaleX(-1)";
+                if (fxOn.has("spin")) ov.style.animation = "spinAnim 8s linear infinite";
+                if (fxOn.has("wave")) ov.style.animation = "waveAnim 2s ease-in-out infinite";
+
+                // spin/wave override the manual transform
+                if (!fxOn.has("spin") && !fxOn.has("wave")) ov.style.transform = t.trim();
+
+                if (fxOn.has("shatter")) {
+                    ov.style.clipPath =
+                        "polygon(0 0,47% 0,53% 17%,100% 0,100% 44%,83% 50%,100% 56%,100% 100%,53% 100%,47% 83%,0 100%,0 56%,17% 50%,0 44%)";
+                }
+
+                // Overlay must be visible to show effects, but must NOT block pointer events
+                ov.style.pointerEvents = "none";
+
+                // Background: replicate map visuals via CSS backdrop-filter on overlay
+                // We use a mix-blend-mode approach instead — overlay stays transparent
+                // but its children (glitch, grain, vignette) add visual noise on top
+                if (fxOn.has("glitch")) addGlitch();
+                else removeGlitch();
+                if (fxOn.has("grainy")) addGrain();
+                else removeGrain();
+                if (fxOn.has("vignette")) addVig();
+                else removeVig();
+            }
+
+            // ─── Overlay child effects ────────────────────────────────────────────────────
+
+            function addGlitch() {
+                if (glitchEl) return;
+                var ov = document.getElementById("fx-overlay");
+                glitchEl = document.createElement("div");
+                glitchEl.style.cssText = "position:absolute;inset:0;pointer-events:none;z-index:2;";
+                // Two pseudo-like divs for chromatic aberration
+                var b1 = document.createElement("div");
+                b1.style.cssText =
+                    "position:absolute;inset:0;background:rgba(255,0,60,0.22);mix-blend-mode:screen;animation:g1 0.25s infinite steps(1);";
+                var b2 = document.createElement("div");
+                b2.style.cssText =
+                    "position:absolute;inset:0;background:rgba(0,210,255,0.22);mix-blend-mode:screen;animation:g2 0.35s infinite steps(1);";
+                glitchEl.appendChild(b1);
+                glitchEl.appendChild(b2);
+                ov.appendChild(glitchEl);
+            }
+            function removeGlitch() {
+                if (glitchEl) {
+                    glitchEl.remove();
+                    glitchEl = null;
+                }
+            }
+
+            function addGrain() {
+                if (grainEl) return;
+                var ov = document.getElementById("fx-overlay");
+                grainEl = document.createElement("canvas");
+                grainEl.style.cssText =
+                    "position:absolute;inset:0;width:100%;height:100%;opacity:0.18;mix-blend-mode:overlay;pointer-events:none;z-index:3;";
+                ov.appendChild(grainEl);
+                renderGrain();
+            }
+            function renderGrain() {
+                if (!grainEl) return;
+                var w = grainEl.offsetWidth || 400,
+                    h = grainEl.offsetHeight || 400;
+                grainEl.width = w;
+                grainEl.height = h;
+                var ctx = grainEl.getContext("2d");
+                var id = ctx.createImageData(w, h);
+                for (var i = 0; i < id.data.length; i += 4) {
+                    var v = (Math.random() * 255) | 0;
+                    id.data[i] = v;
+                    id.data[i + 1] = v;
+                    id.data[i + 2] = v;
+                    id.data[i + 3] = 255;
+                }
+                ctx.putImageData(id, 0, 0);
+                if (grainEl) requestAnimationFrame(renderGrain);
+            }
+            function removeGrain() {
+                if (grainEl) {
+                    grainEl.remove();
+                    grainEl = null;
+                }
+            }
+
+            function addVig() {
+                if (vigEl) return;
+                var ov = document.getElementById("fx-overlay");
+                vigEl = document.createElement("div");
+                vigEl.style.cssText =
+                    "position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,0.7) 100%);";
+                ov.appendChild(vigEl);
+            }
+            function removeVig() {
+                if (vigEl) {
+                    vigEl.remove();
+                    vigEl = null;
+                }
+            }
+
+            // ─── Theme & adjustments ──────────────────────────────────────────────────────
+            function setTheme(el, e) {
+                document.querySelectorAll(".swatch").forEach(function (s) {
+                    s.classList.remove("on");
+                });
+                el.classList.add("on");
+                theme = e;
+                applyAll();
+            }
+
+            function updateAdj() {
+                adj.b = document.getElementById("sl-b").value / 100;
+                adj.c = document.getElementById("sl-c").value / 100;
+                adj.s = document.getElementById("sl-s").value / 100;
+                adj.h = parseInt(document.getElementById("sl-h").value);
+                document.getElementById("sv-b").textContent = adj.b.toFixed(1);
+                document.getElementById("sv-c").textContent = adj.c.toFixed(1);
+                document.getElementById("sv-s").textContent = adj.s.toFixed(1);
+                document.getElementById("sv-h").textContent = adj.h + "°";
+                applyAll();
+            }
+
+            function updateOpacity() {
+                tileOpacity = document.getElementById("sl-o").value / 100;
+                document.getElementById("sv-o").textContent = Math.round(tileOpacity * 100) + "%";
+                applyAll();
+            }
+
+            // ─── Fx toggles ───────────────────────────────────────────────────────────────
+            var fxClass = {
+                blur: "on",
+                glitch: "on-red",
+                grainy: "on",
+                tilt: "on-blue",
+                stretch: "on-blue",
+                mirror: "on-blue",
+                spin: "on-green",
+                wave: "on-green",
+                vignette: "on",
+                shatter: "on-red"
+            };
+
+            function toggleFx(btn, name) {
+                if (fxOn.has(name)) {
+                    fxOn.delete(name);
+                    btn.classList.remove("on", "on-blue", "on-green", "on-red");
+                } else {
+                    fxOn.add(name);
+                    btn.classList.add(fxClass[name] || "on");
+                }
+                applyAll();
+                updateStack();
+            }
+
+            function updateStack() {
+                var row = document.getElementById("stackrow");
+                row.innerHTML = "";
+                fxOn.forEach(function (n) {
+                    var t = document.createElement("span");
+                    t.className = "stag";
+                    t.textContent = n;
+                    row.appendChild(t);
+                });
+            }
+
+            // ─── Resets ───────────────────────────────────────────────────────────────────
+            function resetSliders() {
+                document.getElementById("sl-b").value = 100;
+                document.getElementById("sv-b").textContent = "1.0";
+                document.getElementById("sl-c").value = 100;
+                document.getElementById("sv-c").textContent = "1.0";
+                document.getElementById("sl-s").value = 100;
+                document.getElementById("sv-s").textContent = "1.0";
+                document.getElementById("sl-h").value = 0;
+                document.getElementById("sv-h").textContent = "0°";
+                document.getElementById("sl-o").value = 100;
+                document.getElementById("sv-o").textContent = "100%";
+            }
+            function resetFxBtns() {
+                document.querySelectorAll(".fxbtn").forEach(function (b) {
+                    b.classList.remove("on", "on-blue", "on-green", "on-red");
+                });
+                document.getElementById("stackrow").innerHTML = "";
+            }
+            function resetSwatches() {
+                document.querySelectorAll(".swatch").forEach(function (s) {
+                    s.classList.remove("on");
+                });
+                document.querySelector('.swatch[data-e=""]').classList.add("on");
+            }
+
+            // ─── Labels ───────────────────────────────────────────────────────────────────
+            function startLabel() {
+                var name = document.getElementById("lbl-txt").value.trim();
+                if (!name) {
+                    document.getElementById("lbl-txt").focus();
+                    return;
+                }
+                placing = true;
+                var btn = document.getElementById("lbl-btn");
+                btn.textContent = "▸ Tap the map now…";
+                btn.classList.add("placing");
+                document.getElementById("lbl-hint").textContent = "Click anywhere on the map to drop your label.";
+                document.getElementById("lbl-hint").className = "hint live";
+                document.getElementById("map").style.cursor = "crosshair";
+            }
+
+            function stopLabel() {
+                placing = false;
+                var btn = document.getElementById("lbl-btn");
+                btn.textContent = "+ Click map to place label";
+                btn.classList.remove("placing");
+                document.getElementById("lbl-hint").textContent = "Type a name then click above, then tap the map.";
+                document.getElementById("lbl-hint").className = "hint";
+                document.getElementById("map").style.cursor = "";
+            }
+
+            function dropLabel(name, lat, lng) {
+                var id = Date.now();
+                labels.push({ id: id, name: name, lat: lat, lng: lng });
+                var icon = L.divIcon({
+                    html: '<div class="custom-pin">' + name + "</div>",
+                    className: "",
+                    iconAnchor: [0, 10]
+                });
+                var m = L.marker([lat, lng], { icon: icon }).addTo(map);
+                m._lid = id;
+                markers.push(m);
+                document.getElementById("lbl-txt").value = "";
+                renderLabels();
+            }
+
+            function removeLabel(id) {
+                labels = labels.filter(function (l) {
+                    return l.id !== id;
+                });
+                for (var i = 0; i < markers.length; i++) {
+                    if (markers[i]._lid === id) {
+                        if (map) map.removeLayer(markers[i]);
+                        markers.splice(i, 1);
+                        break;
+                    }
+                }
+                renderLabels();
+            }
+
+            function renderLabels() {
+                var list = document.getElementById("lbl-list");
+                if (!labels.length) {
+                    list.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:2px 0">No labels yet</div>';
+                    return;
+                }
+                list.innerHTML = "";
+                labels.forEach(function (l) {
+                    var div = document.createElement("div");
+                    div.className = "lbl-item";
+                    var span = document.createElement("span");
+                    span.className = "lbl-name";
+                    span.textContent = l.name;
+                    span.onclick = (function (ll) {
+                        return function () {
+                            if (map) map.setView([ll.lat, ll.lng], Math.max(map.getZoom(), 15), { animate: true });
+                        };
+                    })(l);
+                    var btn = document.createElement("button");
+                    btn.className = "lbl-del";
+                    btn.textContent = "✕";
+                    btn.onclick = (function (lid) {
+                        return function () {
+                            removeLabel(lid);
+                        };
+                    })(l.id);
+                    div.appendChild(span);
+                    div.appendChild(btn);
+                    list.appendChild(div);
+                });
+            }
+
+            // ─── Boot ─────────────────────────────────────────────────────────────────────
+            buildMap(CITIES[Math.floor(Math.random() * CITIES.length)]);
+        </script>
+    </body>
 </html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang>
+    <head>
+        <link rel="stylesheet" href="style.css" />
+        <title></title>
+    </head>
+    <body>
+        <div class="section">
+            <h1 class="fade">I still use these things.</h1>
+        </div>
+
+        <div class="section">
+            <h1 class="fade">I still "need" them.</h1>
+        </div>
+
+        <div class="section">
+            <h1 class="fade">But I see them differently now.</h1>
+        </div>
+
+        <div class="section">
+            <p class="fade">This project doesn’t resolve the system. It just makes it visible.</p>
+            <div class="next" onclick="location.href='help.html'">→ resources</div>
+        </div>
+
+        <script>
+            document.querySelectorAll(".fade").forEach((el, i) => {
+                setTimeout(() => el.classList.add("visible"), i * 400);
+            });
+        </script>
+    </body>
+</html>

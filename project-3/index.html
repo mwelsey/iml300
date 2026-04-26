@@ -1,52 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang>
     <head>
-        <meta charset="UTF-8" />
-        <title>Invisible Labor</title>
         <link rel="stylesheet" href="style.css" />
+        <title></title>
     </head>
-
     <body>
-        <header>
-            <a href="index.html" class="logo"><h2>Invisible Labor</h2></a>
-            <nav>
-                <a href="whatwhy.html">What/Why</a>
-                <a href="stories.html">Stories</a>
-                <a href="help.html">Help</a>
-                <a href="map.html">Map</a>
-            </nav>
-        </header>
+        <div class="section">
+            <h1 class="fade">This is everything I use in a day.</h1>
+            <p class="fade">Objects I don’t think about. Objects I bought. Objects that feel like mine.</p>
+            <div class="next fade" onclick="location.href='products.html'">→ lets start with the objects</div>
+        </div>
 
-        <section>
-            <h1>The Cost of Convenience</h1>
-            <p>....</p>
-        </section>
-
-        <section class="box">
-            <h2>Map</h2>
-            <p>[Interactive Map Preview]</p>
-        </section>
-
-        <section class="highlight">
-            <h2>Highlighted Consumer Items</h2>
-            <p>T-shirt, iPhone, Coffee, Sneakers,</p>
-        </section>
-
-        <section class="box">
-            <h2>Most in Need</h2>
-            <p>Garment workers</p>
-            <p>agricultural laborers</p>
-            <p>miners</p>
-        </section>
-
-        <section class="highlight">
-            <h2>Highlighted Stories</h2>
-            <p>Real experiences from workers across global supply chains</p>
-            <p>Real experiences from workers across global supply chains</p>
-        </section>
-
-        <footer>
-            <p>More Information | Sources | Contact</p>
-        </footer>
+        <script>
+            document.querySelectorAll(".fade").forEach((el, i) => {
+                setTimeout(() => el.classList.add("visible"), i * 300);
+            });
+        </script>
     </body>
 </html>

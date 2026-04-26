@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  </head>
+  <body>
+    <div id="overlayText">
+      <p id="text"></p>
+      <div class="next" onclick="location.href='ending.html'">→ continue</div>
+    </div>
+
+    <script>
+      let images = [];
+      let items = [];
+
+      let textLines = [
+        "These objects surround me.",
+        "They accumulate.",
+        "They repeat.",
+        "They come from everywhere.",
+        "They connect me to systems I don’t see."
+      ];
+
+      let currentText = 0;
+
+      function preload() {
+        let files = [
+          "assets/phone.jpg",
+          "assets/case.jpg",
+          "assets/wallet.jpg",
+          "assets/airpods.jpg",
+          "assets/towel.jpg",
+          "assets/laptop.jpg",
+          "assets/purse.jpg",
+          "assets/plate.jpg",
+          "assets/pen.jpg"
+        ];
+
+        for (let f of files) {
+          images.push(loadImage(f));
+        }
+      }
+
+      function setup() {
+        createCanvas(window.innerWidth, window.innerHeight);
+
+        setInterval(() => {
+          currentText = (currentText + 1) % textLines.length;
+          document.getElementById("text").innerText = textLines[currentText];
+        }, 3000);
+      }
+
+      function draw() {
+        background(245);
+
+        if (frameCount % 20 === 0) {
+          items.push({
+            img: random(images),
+            x: random(width),
+            y: random(height),
+            size: random(60, 120)
+          });
+        }
+
+        for (let i = 0; i < items.length; i++) {
+          image(items[i].img, items[i].x, items[i].y, items[i].size, items[i].size);
+        }
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  #overlayText {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    max-width: 400px;
+  }
+</style>

@@ -1,36 +1,27 @@
 <!doctype html>
-<html lang="en">
+<html lang>
     <head>
-        <meta charset="UTF-8" />
-        <title>Map</title>
+        <title></title>
         <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     </head>
-
     <body>
-        <header>
-            <a href="index.html" class="logo"><h2>Invisible Labor</h2></a>
-            <nav>
-                <a href="whatwhy.html">What/Why</a>
-                <a href="stories.html">Stories</a>
-                <a href="help.html">Help</a>
-                <a href="map.html">Map</a>
-            </nav>
-        </header>
+        <div id="map" style="height: 100vh"></div>
 
-        <section>
-            <h1>Global Supply Chain Map</h1>
+        <div class="section" style="position: absolute; top: 0">
+            <h1>Far away.</h1>
+            <p>But connected to me.</p>
+            <div class="next" onclick="location.href='labor.html'">→ who makes them?</div>
+        </div>
 
-            <div class="box" style="height: 400px">
-                <p>[Interactive Map Placeholder]</p>
-            </div>
-        </section>
+        <script>
+            let map = L.map("map").setView([20, 0], 2);
 
-        <section>
-            <p>This map traces how everyday items move across the world, revealing the labor systems behind them.</p>
-        </section>
+            L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
-        <footer>
-            <p>More Information | Sources | Contact</p>
-        </footer>
+            L.marker([35, 103]).addTo(map).bindPopup("Electronics manufacturing");
+            L.marker([10, 106]).addTo(map).bindPopup("Garment factories");
+        </script>
     </body>
 </html>

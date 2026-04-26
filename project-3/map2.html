@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang>
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+      #map {
+        height: 100vh;
+      }
+    </style>
+    <title></title>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script>
+      let map = L.map("map").setView([20, 0], 2);
+
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+
+      // Example markers
+      L.marker([35.8617, 104.1954]).addTo(map).bindPopup("Electronics manufacturing - China");
+
+      L.marker([10.8231, 106.6297]).addTo(map).bindPopup("Garment production - Vietnam");
+    </script>
+  </body>
+</html>

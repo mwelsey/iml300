@@ -1,60 +1,60 @@
 body {
-  margin: 0;
-  font-family: Helvetica, Arial, sans-serif;
-  background: #f5f5f5;
-  color: #111;
-  overflow-x: hidden;
+    margin: 0;
+    font-family: Helvetica, Arial, sans-serif;
+    background: #f5f5f5;
+    color: #111;
+    overflow-x: hidden;
 }
 
 /* FULLSCREEN SECTIONS */
 .section {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 40px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
 }
 
 /* TEXT */
 h1 {
-  font-size: 3rem;
-  max-width: 600px;
+    font-size: 3rem;
+    max-width: 600px;
 }
 
 p {
-  max-width: 500px;
-  line-height: 1.5;
+    max-width: 500px;
+    line-height: 1.5;
 }
 
 /* NEXT LINK */
 .next {
-  margin-top: 40px;
-  font-size: 14px;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: 0.3s;
+    margin-top: 40px;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: 0.3s;
 }
 
 .next:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 /* IMAGE */
 .full-img {
-  width: 300px;
-  margin-top: 20px;
+    width: 300px;
+    margin-top: 20px;
 }
 
 /* FADE-IN */
 .fade {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: 1s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 1s;
 }
 
 .fade.visible {
-  opacity: 1;
-  transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
 body {
     margin: 0;

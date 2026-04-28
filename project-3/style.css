@@ -8,11 +8,11 @@ body {
 
 /* FULLSCREEN SECTIONS */
 .section {
-    height: 100vh;
+    min-height: 30vh; /* instead of full screen */
+    padding: 20px 40px; /* slightly tighter */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 40px;
 }
 
 /* TEXT */
@@ -176,7 +176,8 @@ nav a {
 }
 
 /* Reset */
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
@@ -198,4 +199,38 @@ body, html {
     z-index: 2;
 }
 
+/* smoother fade (your version is a bit abrupt) */
+.fade {
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
 
+/* subtle text interaction (very minimal, keeps your style) */
+h1 {
+    transition: opacity 0.3s ease;
+}
+
+h1:hover {
+    opacity: 0.75;
+}
+
+/* next button — make it feel clickable but still subtle */
+.next {
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.next:hover {
+    transform: translateX(6px);
+}
+
+/* optional: slight stagger when multiple elements are in one section */
+.fade:nth-child(2) {
+    transition-delay: 0.15s;
+}
+
+.section {
+    transition: transform 0.6s ease;
+}
+
+.section:hover {
+    transform: scale(1.01);
+}

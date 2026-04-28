@@ -1,63 +1,58 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <title>Map Story</title>
+    <head>
+        <title>Map Story</title>
 
-    <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="style.css" />
+                <link rel="stylesheet" href="script.js" />
 
-    <!-- Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-</head>
 
-<body>
+        <!-- Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    </head>
 
-    <!-- MAP (fixed background layer) -->
-    <div id="map"></div>
+    <body>
+        <!-- MAP (fixed background layer) -->
+        <div id="map"></div>
 
-    <!-- CONTENT (scrolling over map) -->
-    <div class="content">
-        <div class="section">
-            <h1>Far away.</h1>
-            <p>But connected to me.</p>
-            <div class="next" onclick="location.href='labor.html'">
-                → who makes them?
+        <!-- CONTENT (scrolling over map) -->
+        <div class="content">
+            <div class="section">
+               
+                <div class="next" onclick="location.href='labor.html'">→ who makes them?</div>
             </div>
         </div>
-    </div>
 
-    <script>
-        // Initialize map
-        let map = L.map("map", {
-            zoomControl: true,
-            scrollWheelZoom: true
-        }).setView([20, 0], 2);
+        <script>
+            // Initialize map
+            let map = L.map("map", {
+                zoomControl: true,
+                scrollWheelZoom: true
+            }).setView([20, 0], 2);
 
-        // Tile layer
-        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            maxZoom: 6,
-            minZoom: 2
-        }).addTo(map);
+            // Tile layer
+            L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                maxZoom: 6,
+                minZoom: 2
+            }).addTo(map);
 
-        // MARKERS (expanded global network)
-        let locations = [
-            { coords: [35, 103], text: "China — Electronics manufacturing" },
-            { coords: [10, 106], text: "Vietnam — Garment factories" },
-            { coords: [23, 90], text: "Bangladesh — Textile production" },
-            { coords: [28, 77], text: "India — Raw materials + labor" },
-            { coords: [-6, 106], text: "Indonesia — Assembly + exports" },
-            { coords: [-23, -46], text: "Brazil — Resource extraction" },
-            { coords: [19, -99], text: "Mexico — Manufacturing + transport" },
-            { coords: [37, -122], text: "California — Consumption" },
-            { coords: [51, 0], text: "UK — Global distribution" }
-        ];
+            // MARKERS (expanded global network)
+            let locations = [
+                { coords: [35, 103], text: "China — Electronics manufacturing" },
+                { coords: [10, 106], text: "Vietnam — Garment factories" },
+                { coords: [23, 90], text: "Bangladesh — Textile production" },
+                { coords: [28, 77], text: "India — Raw materials + labor" },
+                { coords: [-6, 106], text: "Indonesia — Assembly + exports" },
+                { coords: [-23, -46], text: "Brazil — Resource extraction" },
+                { coords: [19, -99], text: "Mexico — Manufacturing + transport" },
+                { coords: [37, -122], text: "California — Consumption" },
+                { coords: [51, 0], text: "UK — Global distribution" }
+            ];
 
-        locations.forEach(loc => {
-            L.marker(loc.coords)
-                .addTo(map)
-                .bindPopup(loc.text);
-        });
-    </script>
-
-</body>
+            locations.forEach((loc) => {
+                L.marker(loc.coords).addTo(map).bindPopup(loc.text);
+            });
+        </script>
+    </body>
 </html>

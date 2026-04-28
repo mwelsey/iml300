@@ -3,7 +3,54 @@
     <head>
         <title></title>
         <link rel="stylesheet" href="style.css" />
+        <style>
+            .section {
+                margin: 10px 0;
+            }
+
+            .dropdown {
+                cursor: pointer;
+                padding: 10px 0;
+                transition: all 0.3s ease;
+            }
+
+            .dropdown h2 {
+                transition: all 0.3s ease;
+                position: relative;
+            }
+
+            .dropdown:hover h2 {
+                opacity: 0.7;
+                transform: translateX(5px);
+            }
+
+            .dropdown h2::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: -4px;
+                width: 0%;
+                height: 1px;
+                background: currentColor;
+                transition: width 0.3s ease;
+            }
+
+            .dropdown:hover h2::after {
+                width: 100%;
+            }
+
+            .dropdown-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease;
+            }
+
+            .dropdown.open .dropdown-content {
+                max-height: 300px;
+            }
+        </style>
     </head>
+
     <body>
         <div class="section">
             <h1 class="fade">What can I do with this?</h1>
@@ -17,36 +64,37 @@
             <p class="fade">But there are ways to look closer, ask questions, and make different choices.</p>
         </div>
 
-        <div class="section">
-            <h2 class="fade">Learn where things come from</h2>
-            <p class="fade">
-                • Research brand supply chains<br />
-                • Look for country-of-origin labels<br />
-                • Read about how materials are sourced
-            </p>
+        <div class="section dropdown fade">
+            <h2>Learn where things come from</h2>
+            <div class="dropdown-content">
+                <p>
+                    • Research brand supply chains<br />
+                    • Look for country-of-origin labels<br />
+                    • Read about how materials are sourced
+                </p>
+            </div>
         </div>
 
-        <div class="section">
-            <h2 class="fade">Support labor transparency</h2>
-            <p class="fade">
-                • Follow organizations that track labor conditions<br />
-                • Pay attention to corporate accountability<br />
-                • Support brands that disclose production practices
-            </p>
+        <div class="section dropdown fade">
+            <h2>Support labor transparency</h2>
+            <div class="dropdown-content">
+                <p>
+                    • Follow organizations that track labor conditions<br />
+                    • Pay attention to corporate accountability<br />
+                    • Support brands that disclose production practices
+                </p>
+            </div>
         </div>
 
-        <div class="section">
-            <h2 class="fade">Consume differently</h2>
-            <p class="fade">
-                • Buy less, reuse more<br />
-                • Repair instead of replace<br />
-                • Consider secondhand options
-            </p>
-        </div>
-
-        <div class="section">
-            <h2 class="fade">Stay with the discomfort</h2>
-            <p class="fade">Awareness doesn’t resolve the system. But it changes how I move through it.</p>
+        <div class="section dropdown fade">
+            <h2>Consume differently</h2>
+            <div class="dropdown-content">
+                <p>
+                    • Buy less, reuse more<br />
+                    • Repair instead of replace<br />
+                    • Consider secondhand options
+                </p>
+            </div>
         </div>
 
         <div class="section">
@@ -54,8 +102,16 @@
         </div>
 
         <script>
+            // fade in
             document.querySelectorAll(".fade").forEach((el, i) => {
                 setTimeout(() => el.classList.add("visible"), i * 300);
+            });
+
+            // dropdown
+            document.querySelectorAll(".dropdown").forEach((dropdown) => {
+                dropdown.addEventListener("click", () => {
+                    dropdown.classList.toggle("open");
+                });
             });
         </script>
     </body>

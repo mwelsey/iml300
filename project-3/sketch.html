@@ -35,7 +35,40 @@
           "assets/laptop.jpg",
           "assets/purse.jpg",
           "assets/plate.jpg",
-          "assets/pen.jpg"
+          "assets/pen.jpg",
+          "assets/allergy.jpg",
+          "assets/bag.jpg",
+          "assets/bodywash.jpg",
+          "assets/brita.jpg",
+          "assets/chapstick.jpg",
+          "assets/conditioner.jpg",
+          "assets/deoderant.jpg",
+          "assets/dino.jpg",
+          "assets/dryerasemarkers.jpg",
+          "assets/facewash.jpg",
+          "assets/fork.jpg",
+          "assets/hairbrush.jpg",
+          "assets/hairoil.jpg",
+          "assets/hairtie.jpg",
+          "assets/hanger.jpg",
+          "assets/icecubetray.jpg",
+          "assets/lights.jpg",
+          "assets/list.jpg",
+          "assets/miniclaw.jpg",
+          "assets/mirror.jpg",
+          "assets/nailpolish.jpg",
+          "assets/notebook.jpg",
+          "assets/oura.jpg",
+          "assets/owala.jpg",
+          "assets/pencil.jpg",
+          "assets/sd.jpg",
+          "assets/sdreader.jpg",
+          "assets/shampoo.jpg",
+          "assets/sketchbook.jpg",
+          "assets/sleepmask.jpg",
+          "assets/toothbrush.jpg",
+          "assets/vacuum.jpg",
+          "assets/washcloth.jpg"
         ];
 
         for (let f of files) {
@@ -47,7 +80,7 @@
         createCanvas(window.innerWidth, window.innerHeight);
 
         setInterval(() => {
-          currentText = (currentText + 1) % textLines.length;
+          currentText = (currentText + 100) % textLines.length;
           document.getElementById("text").innerText = textLines[currentText];
         }, 3000);
       }
@@ -55,7 +88,7 @@
       function draw() {
         background(245);
 
-        if (frameCount % 20 === 0) {
+        if (frameCount % 10 === 0) {
           items.push({
             img: random(images),
             x: random(width),

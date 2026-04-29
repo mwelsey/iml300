@@ -4,50 +4,56 @@
         <title>Map Story</title>
 
         <link rel="stylesheet" href="style.css" />
-                <link rel="stylesheet" href="script.js" />
+        <link rel="stylesheet" href="script.js" />
 
-
-        <!-- Leaflet -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     </head>
 
     <body>
-        <!-- MAP (fixed background layer) -->
         <div id="map"></div>
 
-        <!-- CONTENT (scrolling over map) -->
         <div class="content">
             <div class="section">
-               
                 <div class="next" onclick="location.href='labor.html'">→ who makes them?</div>
             </div>
         </div>
 
         <script>
-            // Initialize map
             let map = L.map("map", {
                 zoomControl: true,
                 scrollWheelZoom: true
             }).setView([20, 0], 2);
 
-            // Tile layer
             L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 maxZoom: 6,
                 minZoom: 2
             }).addTo(map);
 
-            // MARKERS (expanded global network)
             let locations = [
-                { coords: [35, 103], text: "China — Electronics manufacturing" },
-                { coords: [10, 106], text: "Vietnam — Garment factories" },
-                { coords: [23, 90], text: "Bangladesh — Textile production" },
-                { coords: [28, 77], text: "India — Raw materials + labor" },
-                { coords: [-6, 106], text: "Indonesia — Assembly + exports" },
-                { coords: [-23, -46], text: "Brazil — Resource extraction" },
-                { coords: [19, -99], text: "Mexico — Manufacturing + transport" },
-                { coords: [37, -122], text: "California — Consumption" },
-                { coords: [51, 0], text: "UK — Global distribution" }
+                { coords: [24.4, 54.3], text: "United Arab Emirates — Petrochemical refining and polymer pellets" },
+                { coords: [30.0, -93.3], text: "Louisiana, USA — 'Cancer Alley' plastic resin production" },
+                { coords: [35.6, 129.3], text: "Ulsan, South Korea — Large-scale synthetic polymer export" },
+                {
+                    coords: [22.5, 114.0],
+                    text: "Shenzhen, China — The world's hub for mass-produced consumer plastics"
+                },
+                {
+                    coords: [21.0, 105.8],
+                    text: "Hanoi, Vietnam — Rapidly expanding injection molding and electronics casing"
+                },
+                { coords: [23.7, 90.4], text: "Dhaka, Bangladesh — Polyethylene packaging and garment exports" },
+                {
+                    coords: [19.4, -99.1],
+                    text: "Mexico City, Mexico — Major regional assembly and plastic automotive parts"
+                },
+                { coords: [40.7, -74.0], text: "New York City, USA — High-density consumption and single-use waste" },
+                { coords: [52.5, 13.4], text: "Berlin, Germany — High-volume consumer goods distribution" },
+                { coords: [35.0, -145.0], text: "North Pacific Gyre — The final destination for mass-produced waste" },
+                {
+                    coords: [7.3, 3.9],
+                    text: "Lagos, Nigeria — Global destination for plastic waste and 'e-waste' dumping"
+                }
             ];
 
             locations.forEach((loc) => {

@@ -1,23 +1,71 @@
 <!doctype html>
-<html lang>
+<html lang="en">
   <head>
-    <title></title>
+    <title>The Hidden Labor</title>
     <link rel="stylesheet" href="style.css" />
-            <link rel="stylesheet" href="script.js" />
+    <style>
+      .img-container {
+        position: relative;
+        display: flex;
+        gap: 10px;
+        cursor: crosshair;
+        transition: transform 0.5s ease;
+      }
 
+      .full-img {
+        max-height: 60vh;
+        width: auto;
+        border: 1px solid #444;
+      }
+
+      .labor-img {
+        display: none;
+        max-height: 60vh;
+        width: auto;
+        border: 1px solid red;
+      }
+
+      #cursor-hint {
+        position: fixed;
+        pointer-events: none;
+        background: rgba(255, 0, 0, 0.8);
+        color: white;
+        padding: 5px 10px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transform: translate(15px, 15px);
+        display: none;
+        z-index: 100;
+      }
+
+      .next {
+        cursor: pointer;
+        text-decoration: underline;
+        margin-top: 20px;
+      }
+    </style>
   </head>
   <body>
+    <div id="cursor-hint">Click to reveal labor</div>
+
     <div class="section">
       <h1>I never see the labor.</h1>
     </div>
 
     <div class="section">
-      <img src="assets/phone.jpg" class="full-img" />
+      <div class="img-container">
+        <img src="assets/phone.jpg" class="full-img" />
+        <img src="assets/labor1.jpg" class="labor-img" />
+      </div>
       <p>assembled by thousands of workers</p>
     </div>
 
     <div class="section">
-      <img src="assets/towel.jpg" class="full-img" />
+      <div class="img-container">
+        <img src="assets/towel.jpg" class="full-img" />
+        <img src="assets/labor2.jpg" class="labor-img" />
+      </div>
       <p>grown, harvested, processed</p>
     </div>
 
@@ -25,5 +73,38 @@
       <h1>But I feel ownership.</h1>
       <div class="next" onclick="location.href='reflection.html'">→ what does that mean?</div>
     </div>
+    <div class="section"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(document).on("mousemove", function (e) {
+          $("#cursor-hint").css({
+            left: e.clientX,
+            top: e.clientY
+          });
+        });
+
+        $(".img-container").hover(
+          function () {
+            $("#cursor-hint").fadeIn(100);
+          },
+          function () {
+            $("#cursor-hint").fadeOut(100);
+          }
+        );
+
+        $(".img-container").on("click", function () {
+          const laborImg = $(this).find(".labor-img");
+
+          if (laborImg.is(":visible")) {
+            laborImg.hide();
+          } else {
+            $("#cursor-hint").hide();
+            laborImg.css("display", "block");
+          }
+        });
+      });
+    </script>
   </body>
 </html>

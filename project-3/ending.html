@@ -1,33 +1,59 @@
 <!doctype html>
-<html lang>
+<html lang="en">
     <head>
         <link rel="stylesheet" href="style.css" />
-                <link rel="stylesheet" href="script.js" />
-
         <title></title>
+
+        <style>
+            .section {
+                position: relative;
+            }
+
+            .counter {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                font-size: 12px;
+                opacity: 0.5;
+                z-index: 10;
+            }
+        </style>
     </head>
+
     <body>
+        <div class="counter">consumption: <span id="count">0</span></div>
+
         <div class="section">
             <h1 class="fade">I still use these things.</h1>
         </div>
+        <div class="section"></div>
 
         <div class="section">
             <h1 class="fade">I still "need" them.</h1>
         </div>
-
-        <div class="section">
-            <h1 class="fade">But I see them differently now.</h1>
-        </div>
-
+        <div class="section"></div>
         <div class="section">
             <p class="fade">This project doesn’t resolve the system. It just makes it visible.</p>
             <div class="next" onclick="location.href='help.html'">→ resources</div>
         </div>
 
+        <div class="section"></div>
+
         <script>
             document.querySelectorAll(".fade").forEach((el, i) => {
                 setTimeout(() => el.classList.add("visible"), i * 400);
             });
+
+            let count = 0;
+            const display = document.getElementById("count");
+
+            function update() {
+                count++;
+                display.textContent = count;
+            }
+
+            window.addEventListener("scroll", update);
+            window.addEventListener("click", update);
         </script>
     </body>
 </html>

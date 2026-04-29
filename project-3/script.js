@@ -14,4 +14,3 @@ const observer = new IntersectionObserver(
 );
 
 elements.forEach((el) => observer.observe(el));
-

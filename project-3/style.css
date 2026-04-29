@@ -201,7 +201,9 @@ html {
 
 /* smoother fade (your version is a bit abrupt) */
 .fade {
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
 }
 
 /* subtle text interaction (very minimal, keeps your style) */
@@ -215,7 +217,9 @@ h1:hover {
 
 /* next button — make it feel clickable but still subtle */
 .next {
-    transition: transform 0.25s ease, opacity 0.25s ease;
+    transition:
+        transform 0.25s ease,
+        opacity 0.25s ease;
 }
 
 .next:hover {
@@ -233,4 +237,18 @@ h1:hover {
 
 .section:hover {
     transform: scale(1.01);
+}
+#bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    display: block;
+}
+
+.section {
+    position: relative;
+    z-index: 2;
 }

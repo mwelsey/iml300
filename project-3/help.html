@@ -1,9 +1,8 @@
 <!doctype html>
-<html lang>
+<html lang="en">
     <head>
         <title></title>
         <link rel="stylesheet" href="style.css" />
-                <link rel="stylesheet" href="script.js" />
 
         <style>
             .section {
@@ -49,6 +48,16 @@
 
             .dropdown.open .dropdown-content {
                 max-height: 300px;
+            }
+
+            /* 🔥 NEW: counter */
+            .counter {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                font-size: 12px;
+                opacity: 0.6;
+                z-index: 10;
             }
         </style>
     </head>
@@ -102,17 +111,16 @@
         <div class="section">
             <div class="next fade" onclick="location.href='index.html'">→ start again</div>
         </div>
+        <div class="section"></div>
 
         <script>
-            // fade in
             document.querySelectorAll(".fade").forEach((el, i) => {
                 setTimeout(() => el.classList.add("visible"), i * 300);
             });
 
-            // dropdown
-            document.querySelectorAll(".dropdown").forEach((dropdown) => {
-                dropdown.addEventListener("click", () => {
-                    dropdown.classList.toggle("open");
+            document.querySelectorAll(".dropdown").forEach((d) => {
+                d.addEventListener("click", () => {
+                    d.classList.toggle("open");
                 });
             });
         </script>

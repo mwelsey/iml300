@@ -1,28 +1,136 @@
 <!doctype html>
-<html lang>
+<html lang="en">
   <head>
     <link rel="stylesheet" href="style.css" />
-        <link rel="stylesheet" href="script.js" />
-
     <title></title>
+
+    <style>
+      #bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+      }
+
+      .section {
+        position: relative;
+        z-index: 2;
+      }
+    </style>
   </head>
+
   <body>
-   <div class="section">
-  <h1 class="fade">Most of this is plastic.</h1>
-</div>
+    <canvas id="bg"></canvas>
 
-<div class="section">
-  <h1 class="fade">Most of it is mass produced.</h1>
-</div>
+    <div class="section">
+      <h1 class="fade">Most of this is plastic.</h1>
+    </div>
 
-<div class="section">
-  <h1 class="fade">Most of it comes from the same places.</h1>
-  <div class="next fade" onclick="location.href='map.html'">
-    → where are those places?
-  </div>
-</div>
+    <div class="section">
+      <h1 class="fade">Most of it is mass produced.</h1>
+    </div>
 
-<script src="script.js"></script>
+    <div class="section">
+      <h1 class="fade">Most of it comes from the same places.</h1>
+      <div class="next fade" onclick="location.href='map.html'">→ where are those places?</div>
+    </div>
+
+    <div class="section"></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const fades = document.querySelectorAll(".fade");
+        fades.forEach((el, i) => {
+          setTimeout(() => el.classList.add("visible"), i * 600);
+        });
+      });
+
+      const canvas = document.getElementById("bg");
+      const ctx = canvas.getContext("2d");
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
+      const imageSources = [
+        "assets/airpods.jpg",
+        "assets/bodywash.jpg",
+        "assets/brita.jpg",
+        "assets/case.jpg",
+        "assets/chapstick.jpg",
+        "assets/fork.jpg",
+        "assets/hanger.jpg",
+        "assets/icecubetray.jpg",
+        "assets/laptop.jpg",
+        "assets/phone.jpg",
+        "assets/plate.jpg",
+        "assets/toothbrush.jpg",
+        "assets/toothpaste.jpg"
+      ];
+
+      let images = [];
+      let items = [];
+      let loaded = 0;
+
+      imageSources.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => {
+          loaded++;
+          if (loaded === imageSources.length) start();
+        };
+        img.onerror = () => {
+          loaded++;
+          if (loaded === imageSources.length) start();
+        };
+        images.push(img);
+      });
+
+      function start() {
+        for (let i = 0; i < 50; i++) {
+          items.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 30 + 20,
+            speed: Math.random() * 0.8 + 0.2,
+            rot: Math.random() * Math.PI * 2,
+            rotSpeed: (Math.random() - 0.5) * 0.01,
+            img: images[Math.floor(Math.random() * images.length)]
+          });
+        }
+        animate();
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        items.forEach((o) => {
+          o.y += o.speed;
+          o.rot += o.rotSpeed;
+
+          if (o.y > canvas.height + 50) {
+            o.y = -50;
+            o.x = Math.random() * canvas.width;
+          }
+
+          ctx.save();
+          ctx.translate(o.x, o.y);
+          ctx.rotate(o.rot);
+
+          if (o.img.complete) {
+            ctx.drawImage(o.img, -o.size / 2, -o.size / 2, o.size, o.size);
+          }
+
+          ctx.restore();
+        });
+
+        requestAnimationFrame(animate);
+      }
+    </script>
   </body>
 </html>
-

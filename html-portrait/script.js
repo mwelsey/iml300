@@ -1,8 +1,8 @@
 let currentIndex = 0;
 
 function moveSlide(direction) {
-    const slides = document.querySelector('.slides');
-    const totalSlides = document.querySelectorAll('.slides img').length;
+    const slides = document.querySelector(".slides");
+    const totalSlides = document.querySelectorAll(".slides img").length;
 
     currentIndex += direction;
 

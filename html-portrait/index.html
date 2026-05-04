@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Megan's Portrait</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
   </head>
 
   <body>
@@ -19,6 +20,8 @@
 
     <section class="photos">
       <div class="slideshow">
+        <button class="prev" onclick="moveSlide(-1)">‹</button>
+
         <div class="slides">
           <img src="assets/3.jpg" />
           <img src="assets/4.jpg" />
@@ -34,6 +37,7 @@
           <img src="assets/14.jpg" />
           <img src="assets/15.jpg" />
         </div>
+        <button class="next" onclick="moveSlide(1)">›</button>
       </div>
     </section>
 
@@ -58,9 +62,7 @@
         <li>🌊 Everlong – Foo Fighters</li>
         <li>🌊 The Great Divide – Noah Kahan</li>
         <li>🌊 Motion Sickness – Phoebe Bridgers</li>
-
         <li>🌊 Davy Crochet – The Backseat Lovers</li>
-
         <li>🌊 1979 (Remastered 2012) – The Smashing Pumpkins</li>
         <li>🌊 The Man Who Stole The World – Nirvana</li>
         <li>🌊 Black Hole Sun – Soundgarden</li>

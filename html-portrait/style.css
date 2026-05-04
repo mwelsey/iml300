@@ -1,28 +1,124 @@
 body {
-  background-image: url("assets/sky.gif");
+  margin: 0;
+  font-family: "Helvetica Neue", sans-serif;
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+  background: url("assets/waves.jpg") no-repeat center center fixed;
   background-size: cover;
-  height: 100vh;
 }
 
-.titan-one-regular {
-  font-family: "Titan One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+
+  backdrop-filter: brightness(0.75);
 }
 
-h1,
-a {
-  animation: coolAnimation 5s infinite;
+.photos {
+  background: url("assets/back1.jpg") no-repeat center center;
+  background-size: cover;
 }
 
-@keyframes coolAnimation {
-  0% {
-    color: darkblue;
+.poem-section {
+  background: url("assets/back2.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+.music {
+  background: url("assets/back3.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+.photos,
+.poem-section,
+.music {
+  position: relative;
+}
+
+.photos::before,
+.poem-section::before,
+.music::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 20, 40, 0.4);
+  z-index: 0;
+}
+
+.photos *,
+.poem-section *,
+.music * {
+  position: relative;
+  z-index: 1;
+}
+
+h1 {
+  font-size: 3rem;
+  letter-spacing: 2px;
+}
+
+p {
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.slideshow {
+  width: 80%;
+  max-width: 400px;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+.slides {
+  display: flex;
+  width: 300%;
+  animation: slide 12s infinite;
+}
+
+.slides img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
+
+@keyframes slide {
+  0%,
+  33% {
+    transform: translateX(0);
   }
-  50% {
-    color: hotpink;
+  36%,
+  66% {
+    transform: translateX(-100%);
   }
+  69%,
   100% {
-    color: purple;
+    transform: translateX(-200%);
   }
+}
+
+.poem {
+  font-style: italic;
+  opacity: 0.95;
+}
+
+.songs {
+  list-style: none;
+  padding: 0;
+}
+
+.songs li {
+  margin: 10px 0;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+.songs li:hover {
+  transform: translateY(-3px);
 }

@@ -18,25 +18,33 @@ const wordsRef = ref(db, "responses");
 const video = document.getElementById("video-bg");
 
 // DEBUG: Log to console when video is actually ready to play
-video.addEventListener('canplaythrough', () => {
+video.addEventListener("canplaythrough", () => {
     console.log("Video is fully loaded and ready!");
 });
 
 // Force play logic
 video.play().catch(() => console.log("Waiting for click..."));
 
-window.addEventListener("click", () => {
-    if (video.paused) video.play();
-}, { once: true });
+window.addEventListener(
+    "click",
+    () => {
+        if (video.paused) video.play();
+    },
+    { once: true }
+);
 
 // Timer Logic
-const fourMinutes = 4 * 60 * 1000;
-setTimeout(() => { triggerCleanse(); }, fourMinutes);
+const fourMinutes = 3 * 60 * 1000;
+setTimeout(() => {
+    triggerCleanse();
+}, fourMinutes);
 
 // Firebase listener
 onChildAdded(wordsRef, (snapshot) => {
     const data = snapshot.val();
-    if (data && data.text) { spawnWord(data.text); }
+    if (data && data.text) {
+        spawnWord(data.text);
+    }
 });
 
 function spawnWord(text) {

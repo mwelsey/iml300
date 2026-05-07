@@ -1,11 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <title>The Gaze - Final Presentation</title>
-        <!-- jQuery Library -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        
-        <!-- Link to your external JS file - This is the only script tag you need for your logic! -->
         <script type="module" src="script.js"></script>
 
         <style>
@@ -14,7 +11,6 @@
                 margin: 0;
                 padding: 0;
                 overflow: hidden;
-                background: black;
                 font-family: "Helvetica", sans-serif;
                 width: 100vw;
                 height: 100vh;
@@ -74,8 +70,7 @@
         </style>
     </head>
     <body>
-        <!-- The video tag uses the direct Dropbox link -->
-        <video id="video-bg" autoplay muted loop playsinline preload="auto">
+        <video id="video-bg" autoplay loop playsinline preload="auto" style="background-color: black">
             <source
                 src="https://www.dropbox.com/scl/fi/cv1y837n9p2xnlxcr2sax/your-eye-loop.mp4?rlkey=tfq34owmawb0zfbx3ea0u22zq&st=vs9hd0hj&raw=1"
                 type="video/mp4" />
@@ -84,6 +79,5 @@
         <div id="word-layer"></div>
 
         <img id="qr-code" src="qr-code.jpg" alt="Scan to participate" />
-
     </body>
 </html>

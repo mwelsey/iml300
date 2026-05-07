@@ -52,43 +52,52 @@
             <h2>Thank you for looking.</h2>
         </div>
 
-        <script type="module">
-                                import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-                                import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+       <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-                                const firebaseConfig = {
-                                    // PASTE THE SAME FIREBASE CONFIG OBJECT HERE
-                                   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-            const firebaseConfig = {
-              apiKey: "AIzaSyBI5NZfm-DLjE3n_B3O81sY2Ar2GY9r1VU",
-              authDomain: "megan-bf23d.firebaseapp.com",
-              projectId: "megan-bf23d",
-              storageBucket: "megan-bf23d.firebasestorage.app",
-              messagingSenderId: "227294855047",
-              appId: "1:227294855047:web:ed486d13c5c585c37b1d22",
-              measurementId: "G-4C9K64JXDW"
-            };
-                        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyBI5NZfm-DLjE3n_B3O81sY2Ar2GY9r1VU",
+        authDomain: "megan-bf23d.firebaseapp.com",
+        projectId: "megan-bf23d",
+        storageBucket: "megan-bf23d.firebasestorage.app",
+        messagingSenderId: "227294855047",
+        appId: "1:227294855047:web:ed486d13c5c585c37b1d22",
+        measurementId: "G-4C9K64JXDW"
+    };
 
-                        // Initialize Firebase
-                        const app = initializeApp(firebaseConfig);
-                        const analytics = getAnalytics(app);
-                                };
+    // Initialize Firebase once
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-                                const app = initializeApp(firebaseConfig);
-                                const db = getDatabase(app);
+    // Get your elements
+    const sendBtn = document.getElementById('send-btn');
+    const wordInput = document.getElementById('word-input');
+    const formContainer = document.getElementById('form-container');
+    const confirmation = document.getElementById('confirmation');
 
-                                document.getElementById('send-btn').addEventListener('click', () => {
-                                    const val = document.getElementById('word-input').value;
-                                    if(val) {
-                                        push(ref(db, 'responses'), {
-                                            text: val,
-                                            timestamp: Date.now()
-                                        });
-                                        document.getElementById('form-container').style.display = 'none';
-                                        document.getElementById('confirmation').style.display = 'block';
-                                    }
-                                });
-        </script>
+    // Add the click listener
+    sendBtn.addEventListener('click', () => {
+        const val = wordInput.value.trim(); // .trim() removes accidental spaces
+        
+        if (val) {
+            console.log("Submitting:", val); // This helps you see if it's working in the console
+            
+            push(ref(db, 'responses'), {
+                text: val,
+                timestamp: Date.now()
+            }).then(() => {
+                // This only runs after Firebase confirms it saved the data
+                formContainer.style.display = 'none';
+                confirmation.style.display = 'block';
+            }).catch((error) => {
+                console.error("Firebase Error:", error);
+                alert("Oops! Something went wrong. Check your Database Rules.");
+            });
+        } else {
+            alert("Please enter a word!");
+        }
+    });
+</script>
     </body>
 </html>

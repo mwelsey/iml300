@@ -1,8 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <title>The Gaze - Final Presentation</title>
+        <!-- jQuery Library -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
+        <!-- Link to your external JS file - This is the only script tag you need for your logic! -->
+        <script type="module" src="script.js"></script>
+
         <style>
             body,
             html {
@@ -22,7 +27,7 @@
                 width: 100vw;
                 height: 100vh;
                 z-index: -100;
-                object-fit: contain; /* Shows full video without cropping */
+                object-fit: contain;
                 background: black;
                 filter: brightness(0.6) contrast(1.2);
             }
@@ -40,7 +45,7 @@
             .floating-word {
                 position: absolute;
                 color: white;
-                font-size: 2.5rem; /* Made slightly bigger for the presentation */
+                font-size: 2.5rem;
                 font-weight: bold;
                 text-shadow: 2px 2px 15px rgba(0, 0, 0, 1);
                 transition: all 1s ease-in-out;
@@ -69,7 +74,8 @@
         </style>
     </head>
     <body>
-        <video id="video-bg" autoplay muted loop playsinline>
+        <!-- The video tag uses the direct Dropbox link -->
+        <video id="video-bg" autoplay muted loop playsinline preload="auto">
             <source
                 src="https://www.dropbox.com/scl/fi/cv1y837n9p2xnlxcr2sax/your-eye-loop.mp4?rlkey=tfq34owmawb0zfbx3ea0u22zq&st=vs9hd0hj&raw=1"
                 type="video/mp4" />
@@ -79,65 +85,5 @@
 
         <img id="qr-code" src="qr-code.jpg" alt="Scan to participate" />
 
-        <script type="module">
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-            import {
-                getDatabase,
-                ref,
-                onChildAdded
-            } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-            const firebaseConfig = {
-                apiKey: "AIzaSyBI5NZfm-DLjE3n_B3O81sY2Ar2GY9r1VU",
-                authDomain: "megan-bf23d.firebaseapp.com",
-                projectId: "megan-bf23d",
-                storageBucket: "megan-bf23d.firebasestorage.app",
-                messagingSenderId: "227294855047",
-                appId: "1:227294855047:web:ed486d13c5c585c37b1d22",
-                measurementId: "G-4C9K64JXDW"
-            };
-
-            const app = initializeApp(firebaseConfig);
-            const db = getDatabase(app);
-            const wordsRef = ref(db, "responses");
-
-            // 1. TIMER LOGIC: 4 minutes = 240,000 milliseconds
-            const fourMinutes = 4 * 60 * 1000;
-
-            setTimeout(() => {
-                console.log("4 Minute Mark Reached: Triggering Purge.");
-                triggerCleanse();
-            }, fourMinutes);
-
-            // 2. FIREBASE LISTENER
-            onChildAdded(wordsRef, (snapshot) => {
-                const data = snapshot.val();
-                if (data && data.text) {
-                    spawnWord(data.text);
-                }
-            });
-
-            function spawnWord(text) {
-                const x = Math.random() * (window.innerWidth - 200) + 50;
-                const y = Math.random() * (window.innerHeight - 100) + 50;
-
-                const wordElement = $('<div class="floating-word"></div>').text(text).css({ left: x, top: y });
-
-                $("#word-layer").append(wordElement);
-            }
-
-            // 3. THE CLEANSE FUNCTION (Reusable for Timer or Keypress)
-            function triggerCleanse() {
-                $(".floating-word, #qr-code").fadeOut(3000); // 3-second slow fade
-                $("#video-bg").css("filter", "brightness(1) contrast(1)"); // Eye becomes clear
-            }
-
-            // Manual backup trigger (Press 'C')
-            $(document).keydown(function (e) {
-                if (e.key.toLowerCase() === "c") {
-                    triggerCleanse();
-                }
-            });
-        </script>
     </body>
 </html>

@@ -34,7 +34,7 @@ window.addEventListener(
 );
 
 // Timer Logic
-const fourMinutes = 3 * 60 * 1000;
+const fourMinutes = 4 * 60 * 1000;
 setTimeout(() => {
     triggerCleanse();
 }, fourMinutes);
@@ -48,10 +48,36 @@ onChildAdded(wordsRef, (snapshot) => {
 });
 
 function spawnWord(text) {
-    const x = Math.random() * (window.innerWidth - 200) + 50;
-    const y = Math.random() * (window.innerHeight - 100) + 50;
-    const wordElement = $('<div class="floating-word"></div>').text(text).css({ left: x, top: y });
+    const x = Math.random() * (window.innerWidth - 150);
+    const y = Math.random() * (window.innerHeight - 50);
+    
+    const wordElement = $('<div class="floating-word"></div>')
+        .text(text)
+        .css({ left: x, top: y, opacity: 0 });
+    
     $("#word-layer").append(wordElement);
+    
+    // Fade in and start moving
+    wordElement.animate({ opacity: 1 }, 1000);
+    makeItDrift(wordElement);
+}
+
+// 3. Movement Logic: Moves the word to a new random spot every few seconds
+function makeItDrift(element) {
+    const move = () => {
+        if (!element.length) return; // Stop if element was removed
+        const newX = Math.random() * (window.innerWidth - 150);
+        const newY = Math.random() * (window.innerHeight - 50);
+        
+        element.css({
+            left: newX,
+            top: newY
+        });
+        
+        // Repeat the move every 5-8 seconds for a slow drift
+        setTimeout(move, 5000 + Math.random() * 3000);
+    };
+    move();
 }
 
 function triggerCleanse() {

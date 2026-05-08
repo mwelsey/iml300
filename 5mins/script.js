@@ -86,3 +86,18 @@ function triggerCleanse() {
 $(document).keydown(function (e) {
     if (e.key.toLowerCase() === "c") triggerCleanse();
 });
+
+// Force play logic
+video.play().catch(() => console.log("Waiting for click..."));
+
+window.addEventListener(
+    "click",
+    () => {
+        video.muted = false; // <--- ADD THIS LINE HERE
+        if (video.paused) {
+            video.play();
+        }
+        console.log("Audio unmuted and video playing.");
+    },
+    { once: true }
+);

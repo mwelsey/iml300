@@ -50,13 +50,11 @@ onChildAdded(wordsRef, (snapshot) => {
 function spawnWord(text) {
     const x = Math.random() * (window.innerWidth - 150);
     const y = Math.random() * (window.innerHeight - 50);
-    
-    const wordElement = $('<div class="floating-word"></div>')
-        .text(text)
-        .css({ left: x, top: y, opacity: 0 });
-    
+
+    const wordElement = $('<div class="floating-word"></div>').text(text).css({ left: x, top: y, opacity: 0 });
+
     $("#word-layer").append(wordElement);
-    
+
     // Fade in and start moving
     wordElement.animate({ opacity: 1 }, 1000);
     makeItDrift(wordElement);
@@ -68,12 +66,12 @@ function makeItDrift(element) {
         if (!element.length) return; // Stop if element was removed
         const newX = Math.random() * (window.innerWidth - 150);
         const newY = Math.random() * (window.innerHeight - 50);
-        
+
         element.css({
             left: newX,
             top: newY
         });
-        
+
         // Repeat the move every 5-8 seconds for a slow drift
         setTimeout(move, 5000 + Math.random() * 3000);
     };
